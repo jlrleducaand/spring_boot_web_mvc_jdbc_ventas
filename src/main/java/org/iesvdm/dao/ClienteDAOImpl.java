@@ -30,7 +30,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 	@Override	
 	public synchronized void create(Cliente cliente) {
 		
-							//Desde java15+ se tiene la triple quote """ para bloques de texto como cadenas.
+		//Desde java15+ se tiene la triple quote """ para bloques de texto como cadenas. y no tendra en cuenta los saltos de linea
 		String sqlInsert = """
 							INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoría) 
 							VALUES  (     ?,         ?,         ?,       ?,         ?)

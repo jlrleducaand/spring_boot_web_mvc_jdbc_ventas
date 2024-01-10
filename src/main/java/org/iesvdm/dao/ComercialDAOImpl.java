@@ -3,7 +3,6 @@ package org.iesvdm.dao;
 import java.util.List;
 import java.util.Optional;
 
-import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,17 +15,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Repository
 //Utilizo lombok para generar el constructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ComercialDAOImpl implements ComercialDAO {
 
 	//JdbcTemplate se inyecta por el constructor de la clase automáticamente
-	//
+	// no necesita el @Autowired  ya que pusimos @AllArgsConstructor
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
 	@Override
-	public void create(Comercial cliente) {
+	public void create(Comercial comercial) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

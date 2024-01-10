@@ -10,6 +10,7 @@ public interface ComercialDAO {
 	public void create(Comercial cliente);
 	
 	public List<Comercial> getAll();
+
 	public Optional<Comercial>  find(int id);
 	
 	public void update(Comercial cliente);
