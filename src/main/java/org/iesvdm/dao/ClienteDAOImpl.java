@@ -3,14 +3,12 @@ package org.iesvdm.dao;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
-
 import org.iesvdm.modelo.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
 import lombok.extern.slf4j.Slf4j;
 
 //Anotación lombok para logging (traza) de la aplicación
@@ -32,7 +30,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 		
 		//Desde java15+ se tiene la triple quote """ para bloques de texto como cadenas. y no tendra en cuenta los saltos de linea
 		String sqlInsert = """
-							INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoría) 
+							INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoria) 
 							VALUES  (     ?,         ?,         ?,       ?,         ?)
 						   """;
 		
@@ -69,20 +67,20 @@ public class ClienteDAOImpl implements ClienteDAO {
 	@Override
 	public List<Cliente> getAll() {
 		
-		List<Cliente> listFab = jdbcTemplate.query(
+		List<Cliente> listClie = jdbcTemplate.query(
                 "SELECT * FROM cliente",
                 (rs, rowNum) -> new Cliente(rs.getInt("id"),
                 						 	rs.getString("nombre"),
                 						 	rs.getString("apellido1"),
                 						 	rs.getString("apellido2"),
                 						 	rs.getString("ciudad"),
-                						 	rs.getInt("categoría")
+                						 	rs.getInt("categoria")
                 						 	)
         );
 		
-		log.info("Devueltos {} registros.", listFab.size());
+		log.info("Devueltos {} registros.", listClie.size());
 		
-        return listFab;
+        return listClie;
         
 	}
 
@@ -99,7 +97,7 @@ public class ClienteDAOImpl implements ClienteDAO {
             						 						rs.getString("apellido1"),
             						 						rs.getString("apellido2"),
             						 						rs.getString("ciudad"),
-            						 						rs.getInt("categoría")) 
+            						 						rs.getInt("categoria"))
 								, id
 								);
 		
@@ -122,7 +120,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 														apellido1 = ?, 
 														apellido2 = ?,
 														ciudad = ?,
-														categoría = ?  
+														categoria = ?  
 												WHERE id = ?
 										""", cliente.getNombre()
 										, cliente.getApellido1()

@@ -1,7 +1,6 @@
 package org.iesvdm.controlador;
 
 import java.util.List;
-
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.service.ClienteService;
 import org.springframework.stereotype.Controller;
@@ -15,13 +14,14 @@ import org.springframework.web.bind.annotation.*;
 //prefijo.
 //@RequestMapping("/clientes")
 public class ClienteController {
-	
+
 	private ClienteService clienteService;
 	
 	//Se utiliza inyección automática por constructor del framework Spring.
 	//Por tanto, se puede omitir la anotación Autowired
-	//@Autowired
+	//@Autowired ,ademas si solo hay un constructor se puede omitir tb
 	public ClienteController(ClienteService clienteService) {
+
 		this.clienteService = clienteService;
 	}
 	

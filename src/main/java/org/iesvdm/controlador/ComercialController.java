@@ -15,20 +15,20 @@ public class ComercialController {
 
     //Se utiliza inyección automática por constructor del framework Spring.
     //Por tanto, se puede omitir la anotación Autowired
-    //@Autowired
+    //@Autowired  ,ademas si solo hay un constructor se puede omitir tb
     public ComercialController(ComercialService comercialService) {
         this.comercialService = comercialService;
     }
 
     //@RequestMapping(value = "/clientes", method = RequestMethod.GET)
     //equivalente a la siguiente anotación
-    @GetMapping("/comercial") //Al no tener ruta base para el controlador, cada método tiene que tener la ruta completa
+    @GetMapping("/comerciales") //Al no tener ruta base para el controlador, cada método tiene que tener la ruta completa
     public String listar(Model model) {
 
-        List<Comercial> listaComercial =  comercialService.listAll();
-        model.addAttribute("listaComercial", listaComercial);
+        List<Comercial> listaComerciales =  comercialService.listAll();
+        model.addAttribute("listaComerciales", listaComerciales);
 
-        return "comercial";
+        return "comerciales";
 
     }
 
