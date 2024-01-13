@@ -39,6 +39,8 @@ public class PedidoDAOImpl implements PedidoDAO{
         },keyHolder);
 
         pedido.setId(keyHolder.getKey().intValue());
+
+
         //Sin recuperación de id generado
 //		int rows = jdbcTemplate.update(sqlInsert,
 //							cliente.getNombre(),

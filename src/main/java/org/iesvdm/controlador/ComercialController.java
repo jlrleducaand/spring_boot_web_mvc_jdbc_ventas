@@ -1,12 +1,12 @@
 package org.iesvdm.controlador;
 
+import java.util.List;
 import org.iesvdm.modelo.Comercial;
 import org.iesvdm.service.ComercialService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
 
 @Controller
 public class ComercialController {
@@ -17,6 +17,7 @@ public class ComercialController {
     //Por tanto, se puede omitir la anotación Autowired
     //@Autowired  ,ademas si solo hay un constructor se puede omitir tb
     public ComercialController(ComercialService comercialService) {
+
         this.comercialService = comercialService;
     }
 

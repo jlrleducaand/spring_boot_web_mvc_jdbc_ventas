@@ -56,7 +56,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 	@Override
 	public List<Comercial> getAll() {
 		
-		List<Comercial> listComercial = jdbcTemplate.query(
+		List<Comercial> listComer = jdbcTemplate.query(
                 "SELECT * FROM comercial",
                 (rs, rowNum) -> new Comercial(rs.getInt("id"), 
                 							  rs.getString("nombre"), 
@@ -66,9 +66,9 @@ public class ComercialDAOImpl implements ComercialDAO {
                 						 	
         );
 		
-		log.info("Devueltos {} registros.", listComercial.size());
+		log.info("Devueltos {} registros.", listComer.size());
 		
-        return listComercial;
+        return listComer;
 	}
 
 	/**
@@ -105,11 +105,11 @@ public class ComercialDAOImpl implements ComercialDAO {
 														apellido2 = ?,
 														comision = ?  
 												WHERE id = ?
-										""", comercial.getNombre()
-				, comercial.getApellido1()
-				, comercial.getApellido2()
-				, comercial.getComision()
-				, comercial.getId());
+										""" , comercial.getNombre()
+											, comercial.getApellido1()
+											, comercial.getApellido2()
+											, comercial.getComision()
+											, comercial.getId());
 
 		log.info("Update de Cliente con {} registros actualizados.", rows);
 

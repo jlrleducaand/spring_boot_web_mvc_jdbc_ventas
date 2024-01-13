@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ComercialService {
 
-    private ComercialDAO comercialDAO;
+    private final ComercialDAO comercialDAO;
 
     public ComercialService(ComercialDAO comercialDAO) {
         this.comercialDAO = comercialDAO;
