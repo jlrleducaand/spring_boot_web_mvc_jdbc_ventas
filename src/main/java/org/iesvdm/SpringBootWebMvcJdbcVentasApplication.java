@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.iesvdm.dao.ClienteDAO;
 import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.PedidoDAO;
@@ -16,10 +19,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationListener;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import java.awt.Desktop;
-import java.net.URI;
 
-import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @SpringBootApplication
@@ -32,6 +33,8 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 	@Autowired
 	private PedidoDAO pedidoDAO;
 
+    private static final Logger log = LoggerFactory.getLogger(SpringBootWebMvcJdbcVentasApplication.class);
+
 	public static void main(String[] args) {
 		/*SpringApplication.run(SpringBootWebMvcJdbcVentasApplication.class, args);*/
 
@@ -43,6 +46,7 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
+
         log.info("*******************************");
         log.info("*Prueba de arranque ClienteDAO*");
         log.info("*******************************");
