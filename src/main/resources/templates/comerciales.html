@@ -14,9 +14,10 @@
         <div class="col-9">
             <h1>Comercial</h1>
         </div>
-        <div class="col-3 d-flex justify-content-center">
-            <form class="mt-5" action="/comerciales/crear">
-                <input class="row btn-warning  px-5" type="submit" value="Crear">
+        <div class="col-3 ">
+            <form class="d-flex justify-content-between mt-5" action="/comerciales/crear">
+                <input class="row btn-danger  px-5" type="submit" th:value= "#{btn.crear}">
+                <input class="btn-warning px-5" type="button" value="Volver" onclick="location.href='/index';">
             </form>
         </div>
     </div>
@@ -45,12 +46,10 @@
             <form th:action="@{/comerciales/__${comercial.id}__}" style="display: inline;">
                 <input class="btn-success" type="submit" value="Ver Detalle" />
             </form>
-            <!--<form th:action="@{/comerciales/editar/} + ${comercial.id} " style="display: inline;">   erronea -->
             <!-- <form th:action="@{/comerciales/editar/{id}(id=${comercial.id})}" style="display: inline;"> opcion1 -->
             <form th:action="@{'/comerciales/editar/' + ${comercial.id}}" style="display: inline;">
                 <input class="btn-warning" type="submit" value="Editar" />
             </form>
-            <!-- <form th:action="@{/comercial/borrar/__${comercial.}_id_}" method="post" style="display: inline;"> erronea -->
             <!-- <form th:action="@{/comercial/borrar/__${comercial.id}__}" method="post" style="display: inline;"> opcion1 -->
 
             <form th:action="@{/comerciales/borrar/{id}(id=${comercial.id})}" method="post" style="display: inline;">

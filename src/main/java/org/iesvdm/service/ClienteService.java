@@ -11,47 +11,47 @@ import org.springframework.stereotype.Service;
 @Service  //solo espero logica de negocios
 public class ClienteService {
 
-	@Autowired
-	private ClienteDAO clienteDAO;
-	
-	//Se utiliza inyección automática por constructor del framework Spring.
-	//Por tanto, se puede omitir la anotación Autowired  o NO
-	//@Autowired
-	//public ClienteService(ClienteDAO clienteDAO) {
-	//
-	//	this.clienteDAO = clienteDAO;
-	//}
-	
-	public List<Cliente> listAll() {
-		
-		return clienteDAO.getAll();
-		
-	}
+    @Autowired
+    private ClienteDAO clienteDAO;
 
-	public Cliente detalle(Integer id){
-		Optional<Cliente> optClie = clienteDAO.find(id);
-		if (optClie.isPresent())
-			return optClie.get();
-		else
-			return null;
-	}
+    //Se utiliza inyección automática por constructor del framework Spring.
+    //Por tanto, se puede omitir la anotación Autowired  o NO
+    //@Autowired
+    //public ClienteService(ClienteDAO clienteDAO) {
+    //
+    //	this.clienteDAO = clienteDAO;
+    //}
 
-	public void newCliente(Cliente cliente) {
+    public List<Cliente> listAll() {
 
-		clienteDAO.create(cliente);
+        return clienteDAO.getAll();
 
-	}
+    }
 
-	public void replaceCliente(Cliente cliente) {
+    public Cliente detalle(Integer id) {
+        Optional<Cliente> optClie = clienteDAO.find(id);
+        if (optClie.isPresent())
+            return optClie.get();
+        else
+            return null;
+    }
 
-		clienteDAO.update(cliente);
+    public void newCliente(Cliente cliente) {
 
-	}
+        clienteDAO.create(cliente);
 
-	public void deleteCliente(int id) {
+    }
 
-		clienteDAO.delete(id);
+    public void replaceCliente(Cliente cliente) {
 
-	}
+        clienteDAO.update(cliente);
+
+    }
+
+    public void deleteCliente(int id) {
+
+        clienteDAO.delete(id);
+
+    }
 
 }
