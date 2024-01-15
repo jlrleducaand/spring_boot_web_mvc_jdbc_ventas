@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.iesvdm.dao.ClienteDAO;
 import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.PedidoDAO;
@@ -20,7 +22,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 
 
-@Slf4j
 @SpringBootApplication
 public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 
@@ -31,16 +32,16 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 	@Autowired
 	private PedidoDAO pedidoDAO;
 
+    private static final Logger log = LoggerFactory.getLogger(SpringBootWebMvcJdbcVentasApplication.class);
 
 	public static void main(String[] args) {
-		/*SpringApplication.run(SpringBootWebMvcJdbcVentasApplication.class, args);*/
 
 		SpringApplication app = new SpringApplication(SpringBootWebMvcJdbcVentasApplication.class);
 		app.addListeners((ApplicationListener<ApplicationReadyEvent>) event -> openBrowser());
 		app.run(args);
 
 	}
-
+    //Los métodos son llamados en el MAIN: (run y openBrowser)
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -202,9 +203,9 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 
             }
         }
-        openBrowser();
     }
 
+    //El metodo es llamado en el MAIN junto con RUN
 	private static void openBrowser() {
 		String url = "http://localhost:8080/index";
 		String os = System.getProperty("os.name").toLowerCase();
