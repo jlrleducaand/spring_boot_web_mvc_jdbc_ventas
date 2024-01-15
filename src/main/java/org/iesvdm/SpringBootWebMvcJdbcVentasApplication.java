@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.iesvdm.dao.ClienteDAO;
 import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.PedidoDAO;
@@ -33,7 +31,6 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 	@Autowired
 	private PedidoDAO pedidoDAO;
 
-    private static final Logger log = LoggerFactory.getLogger(SpringBootWebMvcJdbcVentasApplication.class);
 
 	public static void main(String[] args) {
 		/*SpringApplication.run(SpringBootWebMvcJdbcVentasApplication.class, args);*/

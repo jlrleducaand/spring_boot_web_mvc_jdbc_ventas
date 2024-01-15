@@ -1,0 +1,71 @@
+		/*Claro, puedes continuar desde allí. La clase `TiendaInformaticaJdbcApplicationTests` que proporcionaste está diseñada para cargar el contexto completo de la aplicación y verificar si Spring Boot puede arrancar correctamente.
+
+		Para probar específicamente un controlador y sus rutas, deberías crear una nueva clase de prueba que use `@WebMvcTest` en lugar de `@SpringBootTest`. Esto cargará solo los componentes necesarios para probar los controladores web y no toda la aplicación.
+
+		Aquí tienes un ejemplo de cómo podrías comenzar a escribir pruebas unitarias para un controlador hipotético dentro de tu proyecto:
+
+		```java*/
+		package org.iesvegademijas.tienda_informatica;
+
+		import static org.mockito.Mockito.*;
+		import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+		import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+		import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+
+		import org.junit.jupiter.api.BeforeEach;
+		import org.junit.jupiter.api.Test;
+		import org.junit.jupiter.api.extension.ExtendWith;
+		import org.mockito.InjectMocks;
+		import org.mockito.Mock;
+		import org.springframework.beans.factory.annotation.Autowired;
+		import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+		import org.springframework.test.context.junit.jupiter.SpringExtension;
+		import org.springframework.test.web.servlet.MockMvc;
+
+// Importa tus clases específicas aquí
+
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(YourController.class)
+public class YourControllerTest {
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Mock
+	private YourService yourService;
+
+	@InjectMocks
+	private YourController yourController;
+
+	@BeforeEach
+	public void setup() {
+		mockMvc = standaloneSetup(yourController).build();
+	}
+
+	@Test
+	public void testYourEndpoint() throws Exception {
+		// Preparar datos y comportamiento esperado
+		// ...
+
+		// Ejecutar la petición y verificar la respuesta
+		mockMvc.perform(get("/your-endpoint"))
+				.andExpect(status().isOk())
+		// .andExpect(...) Otros aspectos que quieras verificar
+		;
+
+		// Verificar que se llamó al servicio como se esperaba
+		// ...
+	}
+
+	// Más métodos de prueba según sea necesario
+}
+/*
+```
+
+		Recuerda reemplazar `YourController`, `YourService`, y `/your-endpoint` con las clases y rutas reales de tu aplicación. También debes importar las clases correspondientes que uses en tu proyecto.
+
+		La anotación `@WebMvcTest` se utiliza para realizar pruebas de integración enfocadas en Spring MVC. En este caso, solo se levantan los componentes necesarios para probar el controlador, haciendo que las pruebas sean más rápidas y enfocadas.
+
+		Si prefieres seguir usando `@SpringBootTest` y quieres realizar pruebas más integrales que incluyan todos los componentes de la aplicación, puedes hacerlo, pero ten en cuenta que estas pruebas serán más lentas y menos especializadas en comparación con usar `@WebMvcTest` para las pruebas de controladores.
+
+*/
