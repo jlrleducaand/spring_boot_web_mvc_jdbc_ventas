@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "fc21604e-1a58-453b-bccc-c8a03795dc63",
+		"name": "Rutas/clientes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27770418"
+	},
+	"item": [
+		{
+			"name": "clientes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "nombre",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clientes  {id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clientes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clientes/crear",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clientes/crear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/clientes/editar/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/clientes/editar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"editar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/clientes/crear",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "pepe",
+							"type": "text"
+						},
+						{
+							"key": "apellido1",
+							"value": "ruiz",
+							"description": "\n",
+							"type": "text"
+						},
+						{
+							"key": "apellido2",
+							"value": "rosas",
+							"type": "text"
+						},
+						{
+							"key": "ciudad",
+							"value": "Málaga",
+							"type": "text"
+						},
+						{
+							"key": "categoria",
+							"value": "100",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/crear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/clientes/editar/{id}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    id:1\r\n    nombre:\"Aaronicus\"\r\n    apellido1:\"Rivero\"\r\n    apellido2:\"Gómez\"\r\n    ciudad:\"Almería\"\r\n    categoria:100\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/editar/1?nombre=Aarónicus&apellido1=Rivero&apellido2=Gómez&ciudad=Almería&categoria=100",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"editar",
+						"1"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "Aarónicus"
+						},
+						{
+							"key": "apellido1",
+							"value": "Rivero"
+						},
+						{
+							"key": "apellido2",
+							"value": "Gómez"
+						},
+						{
+							"key": "ciudad",
+							"value": "Almería"
+						},
+						{
+							"key": "categoria",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/clientes/borrar/{id}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "__method__",
+							"value": "DELETE",
+							"type": "default"
+						},
+						{
+							"key": "codigo",
+							"value": "1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/borrar/19?id=19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"borrar",
+						"19"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "19"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
