@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "98aa3fac-0b9a-4f1e-b2e8-13409693890c",
+		"name": "Rutas/pedidos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27770418"
+	},
+	"item": [
+		{
+			"name": "pedidos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/pedidos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pedidos/crear",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/pedidos/crear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos",
+						"crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pedidos  {id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/pedidos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pedidos/editar/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/pedidos/editar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos",
+						"editar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pedidos/crear",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "Nuevo cliente",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedidos/crear?total=190&fecha=2017-08-25&id_cliente=2&id_comercial=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos",
+						"crear"
+					],
+					"query": [
+						{
+							"key": "total",
+							"value": "190"
+						},
+						{
+							"key": "fecha",
+							"value": "2017-08-25"
+						},
+						{
+							"key": "id_cliente",
+							"value": "2"
+						},
+						{
+							"key": "id_comercial",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pedidos/editar/{id}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "__method__",
+							"value": "PUT",
+							"type": "default"
+						},
+						{
+							"key": "codigo",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "nombre",
+							"value": "Otro fabricante",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedidos/editar/1?id=1&total=160&fecha=2017-12-09&id_cliente=4&id_comercial=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos",
+						"editar",
+						"1"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "total",
+							"value": "160"
+						},
+						{
+							"key": "fecha",
+							"value": "2017-12-09"
+						},
+						{
+							"key": "id_cliente",
+							"value": "4"
+						},
+						{
+							"key": "id_comercial",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pedidos/borrar/{id}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "__method__",
+							"value": "DELETE",
+							"type": "default"
+						},
+						{
+							"key": "codigo",
+							"value": "1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedidos/borrar/41?id=41",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos",
+						"borrar",
+						"41"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "41"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

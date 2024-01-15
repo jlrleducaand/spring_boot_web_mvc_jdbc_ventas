@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "3f86f2af-f094-44be-95b2-b85f5d579d5c",
+		"name": "Rutas/comerciales",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27770418"
+	},
+	"item": [
+		{
+			"name": "comerciales",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/comerciales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comerciales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comerciales/crear",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/comerciales/crear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comerciales",
+						"crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "comerciales{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/comerciales/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comerciales",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/comerciales/editar/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/comerciales/editar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comerciales",
+						"editar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/comerciales/crear",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {}
+				},
+				"url": {
+					"raw": "http://localhost:8080/comerciales/crear?nombre=Pepe&apellido1=Román&apellido2=León&Comision=0.10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comerciales",
+						"crear"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "Pepe"
+						},
+						{
+							"key": "apellido1",
+							"value": "Román"
+						},
+						{
+							"key": "apellido2",
+							"value": "León"
+						},
+						{
+							"key": "Comision",
+							"value": "0.10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/comerciales/editar/{id}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "__method__",
+							"value": "PUT",
+							"type": "default"
+						},
+						{
+							"key": "codigo",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "nombre",
+							"value": "Otro fabricante",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/comerciales/editar/1?id=1&nombre=Daniel&apellido1=Sáez&apellido2=Vega&comision=0.20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comerciales",
+						"editar",
+						"1"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "nombre",
+							"value": "Daniel"
+						},
+						{
+							"key": "apellido1",
+							"value": "Sáez"
+						},
+						{
+							"key": "apellido2",
+							"value": "Vega"
+						},
+						{
+							"key": "comision",
+							"value": "0.20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/clientes/borrar/{id} Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "__method__",
+							"value": "DELETE",
+							"type": "default"
+						},
+						{
+							"key": "codigo",
+							"value": "1",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/comerciales/borrar/36?id=36",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"comerciales",
+						"borrar",
+						"36"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "36"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
