@@ -2,8 +2,7 @@ package org.iesvdm.controlador;
 
 import java.util.List;
 
-import org.iesvdm.modelo.Cliente;
-import org.iesvdm.modelo.Comercial;
+import org.iesvdm.domain.Comercial;
 import org.iesvdm.service.ComercialService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

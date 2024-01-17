@@ -1,4 +1,4 @@
-package org.iesvdm.modelo;
+package org.iesvdm.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

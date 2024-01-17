@@ -4,22 +4,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.iesvdm.dao.ClienteDAO;
 import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.PedidoDAO;
-import org.iesvdm.modelo.Cliente;
-import org.iesvdm.modelo.Comercial;
-import org.iesvdm.modelo.Pedido;
+import org.iesvdm.domain.Cliente;
+import org.iesvdm.domain.Comercial;
+import org.iesvdm.domain.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationListener;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-
 
 
 @SpringBootApplication
@@ -38,11 +36,11 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 
 		SpringApplication app = new SpringApplication(SpringBootWebMvcJdbcVentasApplication.class);
 		app.addListeners((ApplicationListener<ApplicationReadyEvent>) event -> openBrowser());
-		app.run(args);
+		//app.run(args);
 
 	}
     //Los métodos son llamados en el MAIN: (run y openBrowser)
-	@Override
+/*	@Override
 	public void run(String... args) throws Exception {
 
         log.info("*******************************");
@@ -203,7 +201,7 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 
             }
         }
-    }
+    }*/
 
     //El metodo es llamado en el MAIN junto con RUN
 	private static void openBrowser() {
@@ -222,5 +220,4 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner{
 			log.error("Error al abrir el navegador: ", e);
 		}
 	}
-
 }

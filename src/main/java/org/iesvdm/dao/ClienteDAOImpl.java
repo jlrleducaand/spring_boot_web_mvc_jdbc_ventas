@@ -3,7 +3,7 @@ package org.iesvdm.dao;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
-import org.iesvdm.modelo.Cliente;
+import org.iesvdm.domain.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -16,18 +16,42 @@ import lombok.extern.slf4j.Slf4j;
 //Un Repository es un componente y a su vez un estereotipo de Spring 
 //que forma parte de la ‘capa de persistencia’.
 @Repository
-public class ClienteDAOImpl implements ClienteDAO {
+public class ClienteDAOImpl implements ClienteDAO<Cliente> {
 
 	 //Plantilla jdbc inyectada automáticamente por el framework Spring, gracias a la anotación @Autowired.
 	 @Autowired
 	 private JdbcTemplate jdbcTemplate;
-	
+
+	/**
+	 * Devuelve lista con todos loa Clientes.
+	 * CRUD LISTA
+	 */
+	@Override
+	public List<Cliente> getAll() {
+
+		List<Cliente> listClie = jdbcTemplate.query(
+				"SELECT * FROM cliente",
+				(rs, rowNum) -> new Cliente(rs.getInt("id"),
+						rs.getString("nombre"),
+						rs.getString("apellido1"),
+						rs.getString("apellido2"),
+						rs.getString("ciudad"),
+						rs.getInt("categoria")
+				)
+		);
+
+		log.info("Devueltos {} registros.", listClie.size());
+
+		return listClie;
+
+	}
+
 	/**
 	 * Inserta en base de datos el nuevo Cliente, actualizando el id en el bean Cliente.
+	 * CREATE
 	 */
 	@Override	
 	public synchronized void create(Cliente cliente) {
-		
 		//Desde java15+ se tiene la triple quote """ para bloques de texto como cadenas. y no tendra en cuenta los saltos de linea
 		String sqlInsert = """
 							INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoria) 
@@ -62,30 +86,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 	}
 
 	/**
-	 * Devuelve lista con todos loa Clientes.
-	 */
-	@Override
-	public List<Cliente> getAll() {
-		
-		List<Cliente> listClie = jdbcTemplate.query(
-                "SELECT * FROM cliente",
-                (rs, rowNum) -> new Cliente(rs.getInt("id"),
-                						 	rs.getString("nombre"),
-                						 	rs.getString("apellido1"),
-                						 	rs.getString("apellido2"),
-                						 	rs.getString("ciudad"),
-                						 	rs.getInt("categoria")
-                						 	)
-        );
-		
-		log.info("Devueltos {} registros.", listClie.size());
-		
-        return listClie;
-        
-	}
-
-	/**
 	 * Devuelve Optional de Cliente con el ID dado.
+	 * READ
 	 */
 	@Override
 	public Optional<Cliente> find(int id) {
@@ -108,12 +110,13 @@ public class ClienteDAOImpl implements ClienteDAO {
 			return Optional.empty(); }
         
 	}
+
 	/**
 	 * Actualiza Cliente con campos del bean Cliente según ID del mismo.
+	 * UPDATE
 	 */
 	@Override
 	public void update(Cliente cliente) {
-		
 		int rows = jdbcTemplate.update("""
 										UPDATE cliente SET 
 														nombre = ?, 
@@ -135,6 +138,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 	/**
 	 * Borra Cliente con ID proporcionado.
+	 * DELETE
 	 */
 	@Override
 	public void delete(long id) {
