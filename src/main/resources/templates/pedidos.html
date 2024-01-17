@@ -43,8 +43,8 @@
         <div class="col-2" th:text="${pedido.id}">0</div>
         <div class="col-2" th:text="${pedido.total}">total</div>
         <div class="col-2" th:text="${pedido.fecha}">fecha</div>
-        <div class="col-2" th:text="${pedido.id_cliente}">id_cliente</div>
-        <div class="col-1" th:text="${pedido.id_comercial}">id_comercial</div>
+        <div class="col-2" th:text="${pedido.getCliente().getId()}">id_cliente</div>
+        <div class="col-1" th:text="${pedido.getComercial().getId()}">id_comercial</div>
         <div class="col-3 " style="overflow: hidden;">
             <form th:action="@{/pedidos/__${pedido.id}__}" style="display: inline;">
                 <input class="btn-success" type="submit" value="Ver Detalle"/>

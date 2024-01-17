@@ -39,8 +39,8 @@
             <div class=" d-flex flex-nowrap justify-content-center gap-1">
                 <input  class="col-2 text-center border-1" th:field="${pedido.total}"    	/>
                 <input  class="col-2 text-center border-1" th:field="${pedido.fecha}"  />
-                <input  class="col-2 text-center border-1" th:field="${pedido.id_cliente}"  />
-                <input  class="col-2 text-center border-1" th:field="${pedido.id_comercial}"    	/>
+                <input  class="col-2 text-center border-1" th:field="${pedido.getCliente().getId()}"  />
+                <input  class="col-2 text-center border-1" th:field="${pedido.getComercial().getId()}"    	/>
             </div>
         </div>
 

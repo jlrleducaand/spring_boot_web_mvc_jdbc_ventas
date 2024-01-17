@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.iesvdm.dao.PedidoDAO;
-import org.iesvdm.modelo.Pedido;
+import org.iesvdm.domain.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

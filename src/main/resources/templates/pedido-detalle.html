@@ -40,9 +40,9 @@
             <div class=" d-flex flex-nowrap justify-content-center ">
                 <input class="col-2 text-center border-0" th:value="${pedido.total}" value="Total" readonly="readonly"/>
                 <input class="col-2 text-center border-0" th:value="${pedido.fecha}" value="Fecha" readonly="readonly"/>
-                <input class="col-2 text-center border-0" th:value="${pedido.id_cliente}" value="ID-Cliente"
+                <input class="col-2 text-center border-0" th:value="${pedido.getCliente().getId()}" value="ID-Cliente"
                        readonly="readonly"/>
-                <input class="col-2 text-center border-0" th:value="${pedido.id_comercial}" value="ID-Comercial"
+                <input class="col-2 text-center border-0" th:value="${pedido.getComercial().getId()}" value="ID-Comercial"
                        readonly="readonly"/>
 
             </div>

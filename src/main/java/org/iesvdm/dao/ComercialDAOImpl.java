@@ -4,15 +4,13 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
-import org.iesvdm.modelo.Cliente;
-import org.iesvdm.modelo.Comercial;
+import org.iesvdm.domain.Comercial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 //Anotación lombok para logging (traza) de la aplicación
@@ -20,13 +18,31 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 //Utilizo lombok para generar el constructor
 //@AllArgsConstructor
-public class ComercialDAOImpl implements ComercialDAO {
+public class ComercialDAOImpl implements ComercialDAO<Comercial> {
 
 	//JdbcTemplate se puede inyectar por el constructor de la clase automáticamente
 	// no necesita el @Autowired  ya que podemos poner  @AllArgsConstructor a la clase
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
+	@Override
+	public List<Comercial> getAll() {
+
+		List<Comercial> listComer = jdbcTemplate.query(
+				"SELECT * FROM comercial",
+				(rs, rowNum) -> new Comercial(rs.getInt("id"),
+						rs.getString("nombre"),
+						rs.getString("apellido1"),
+						rs.getString("apellido2"),
+						rs.getFloat("comision"))
+
+		);
+
+		log.info("Devueltos {} registros.", listComer.size());
+
+		return listComer;
+	}
+
 	@Override
 	public synchronized void create(Comercial comercial) {
 		// TODO Auto-generated method stub
@@ -51,24 +67,6 @@ public class ComercialDAOImpl implements ComercialDAO {
 		comercial.setId(keyHolder.getKey().intValue());
 
 		log.info("Insertados {} registros.", rows);
-	}
-
-	@Override
-	public List<Comercial> getAll() {
-		
-		List<Comercial> listComer = jdbcTemplate.query(
-                "SELECT * FROM comercial",
-                (rs, rowNum) -> new Comercial(rs.getInt("id"), 
-                							  rs.getString("nombre"), 
-                							  rs.getString("apellido1"),
-                							  rs.getString("apellido2"), 
-                							  rs.getFloat("comision"))
-                						 	
-        );
-		
-		log.info("Devueltos {} registros.", listComer.size());
-		
-        return listComer;
 	}
 
 	/**
