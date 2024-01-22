@@ -15,7 +15,7 @@
 <div class="container">
     <div class="row">
         <div class="col-9">
-            <h1>Pedidos</h1>
+            <h1>pedidos</h1>Q
         </div>
         <div class="col-3">
             <form class="d-flex justify-content-between mt-5" action="/pedidos/crear">
@@ -39,7 +39,7 @@
         <hr/>
     </div>
 
-    <div class="row text-center py-2" th:each="pedido : ${listaPedidos}">
+    <div class="row text-center py-2" th:each="pedido : ${listapedidos}">
         <div class="col-2" th:text="${pedido.id}">0</div>
         <div class="col-2" th:text="${pedido.total}">total</div>
         <div class="col-2" th:text="${pedido.fecha}">fecha</div>
