@@ -55,7 +55,10 @@ public class ComercialController {
         List<PedidoDTO> listaPedidos = comercialDAO.listaPedidosComercial(id);
         model.addAttribute("listaPedidos", listaPedidos);
 
+        // Obtener el detalle del cliente.
 
+
+        // Nombre de la plantilla
         return "comercial-detalle";
 
     }
