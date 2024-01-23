@@ -30,7 +30,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	//@Autowired no funciona
+	@Autowired
 	private PedidoMapper pedidoMapper;
 
 
