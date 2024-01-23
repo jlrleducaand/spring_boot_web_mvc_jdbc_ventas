@@ -2,6 +2,8 @@ package org.iesvdm.controlador;
 
 import java.util.List;
 
+import org.iesvdm.dao.ComercialDAOImpl;
+import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
 import org.iesvdm.service.ComercialService;
@@ -18,6 +20,8 @@ import org.springframework.web.servlet.view.RedirectView;
 public class ComercialController {
 
     private ComercialService comercialService;
+
+    private ComercialDAOImpl pedidoService;
 
     //Se utiliza inyección automática por constructor del framework Spring.
     //Por tanto, se puede omitir la anotación Autowired
@@ -42,8 +46,14 @@ public class ComercialController {
     @GetMapping("/comerciales/{id}")
     public String detalle(Model model, @PathVariable Integer id ) {
 
+        // Obtener el detalle del comercial.
         Comercial comercial = comercialService.detalle(id);
         model.addAttribute("comercial", comercial);
+
+        // Obtener la lista de pedidos del comercial y añadirla al modelo.
+        List<PedidoDTO> listaPedidos = pedidoService.listaPedidosComercial(id);
+        model.addAttribute("listaPedidos", listaPedidos);
+
 
         return "comercial-detalle";
 

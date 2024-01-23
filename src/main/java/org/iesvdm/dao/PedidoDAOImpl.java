@@ -1,15 +1,20 @@
 package org.iesvdm.dao;
 
+import lombok.AllArgsConstructor;
+import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Pedido;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import lombok.extern.slf4j.Slf4j;
+import org.iesvdm.mapstruct.PedidoMapper;
 
 @Slf4j
 @Repository
@@ -17,6 +22,9 @@ public class PedidoDAOImpl implements PedidoDAO{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private PedidoMapper pedidoMapper;
 
     @Override
     public void create(Pedido pedido) {
@@ -70,6 +78,49 @@ public class PedidoDAOImpl implements PedidoDAO{
 
         return listPed;
 
+    }
+
+    @Override
+    public List<PedidoDTO> getAllByComercial(int id) {
+        List<Pedido> listPed = jdbcTemplate.query(
+                "SELECT * FROM pedido WHERE id_comercial = ? "
+                    ,(rs, rowNum) -> new Pedido(rs.getInt("id"),
+                        rs.getDouble("total"),
+                        rs.getDate("fecha"),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_comercial"))
+                , id
+        );
+        // Convertir la lista de entidades Pedido a una lista de PedidoDTO usando el mapeador
+        List<PedidoDTO> listPedDTO = listPed.stream()
+                .map(pedidoMapper::pedidoAPedidolDTO)
+                .collect(Collectors.toList());
+
+
+        log.info("Devueltos {} registros.", listPed.size());
+
+        return listPedDTO;
+    }
+
+    @Override
+    public List<PedidoDTO> getAllByCliente(int id) {
+        List<Pedido> listPed = jdbcTemplate.query(
+                "SELECT * FROM pedido WHERE id_cliente = ? "
+                ,(rs, rowNum) -> new Pedido(rs.getInt("id"),
+                        rs.getDouble("total"),
+                        rs.getDate("fecha"),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_comercial"))
+                , id
+        );
+
+        List<PedidoDTO> listPedDTO = listPed.stream()
+                .map(pedidoMapper::pedidoAPedidolDTO)
+                .collect(Collectors.toList());
+
+        log.info("Devueltos {} registros.", listPed.size());
+
+        return listPedDTO;
     }
 
     @Override

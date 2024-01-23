@@ -11,6 +11,7 @@ public interface ClienteDAO {
 	
 	List<Cliente> getAll();
 
+
 	Optional<Cliente>  find(int id);
 	
 	void update(Cliente cliente);

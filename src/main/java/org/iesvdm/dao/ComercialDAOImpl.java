@@ -1,18 +1,21 @@
 package org.iesvdm.dao;
 
 import java.sql.PreparedStatement;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.iesvdm.modelo.Cliente;
+import org.iesvdm.dto.PedidoDTO;
+import org.iesvdm.mapstruct.PedidoMapper;
 import org.iesvdm.modelo.Comercial;
+import org.iesvdm.modelo.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 //Anotación lombok para logging (traza) de la aplicación
@@ -26,7 +29,11 @@ public class ComercialDAOImpl implements ComercialDAO {
 	// no necesita el @Autowired  ya que podemos poner  @AllArgsConstructor a la clase
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
+	//@Autowired no funciona
+	private PedidoMapper pedidoMapper;
+
+
 	@Override
 	public synchronized void create(Comercial comercial) {
 		// TODO Auto-generated method stub
@@ -69,6 +76,30 @@ public class ComercialDAOImpl implements ComercialDAO {
 		log.info("Devueltos {} registros.", listComer.size());
 		
         return listComer;
+	}
+
+	@Override
+	public List<PedidoDTO> listaPedidosComercial(int id) {
+		List<Pedido> listPed = jdbcTemplate.query(
+				"SELECT * FROM pedido WHERE id_comercial = ? "
+				,(rs, rowNum) -> new Pedido(rs.getInt("id"),
+						rs.getDouble("total"),
+						rs.getDate("fecha"),
+						rs.getInt("id_cliente"),
+						rs.getInt("id_comercial"))
+				, id
+		);
+		// Convertir la lista de entidades Pedido a una lista de PedidoDTO usando el mapeador
+		List<PedidoDTO> listPedDTO = listPed.stream()
+				.sorted(Comparator.comparing(Pedido::getId_cliente)
+				.thenComparing(Pedido::getFecha))
+				.map(pedidoMapper::pedidoAPedidolDTO)
+				.collect(Collectors.toList());
+
+
+		log.info("Devueltos {} registros.", listPed.size());
+
+		return listPedDTO;
 	}
 
 	/**
@@ -121,7 +152,6 @@ public class ComercialDAOImpl implements ComercialDAO {
 		int rows = jdbcTemplate.update("DELETE FROM comercial WHERE id = ?", id);
 
 		log.info("Delete de Comercial con {} registros eliminados.", rows);
-
 
 	}
 
