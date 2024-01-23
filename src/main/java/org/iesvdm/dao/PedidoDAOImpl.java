@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository
-public class PedidoDAOImpl implements PedidoDAO<Pedido>{
+public class PedidoDAOImpl implements PedidoDAO{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

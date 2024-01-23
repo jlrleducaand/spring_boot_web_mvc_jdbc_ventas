@@ -3,12 +3,13 @@ package org.iesvdm.dao;
 
 import org.iesvdm.domain.Comercial;
 import org.iesvdm.domain.Cliente;
+import org.iesvdm.domain.Pedido;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public interface PedidoDAO<Pedido> extends RepositorioDAOBase<Pedido>{
+public interface PedidoDAO extends RepositorioDAOBase<Pedido>{
 
 public Optional<Cliente> findClienteBy(int pedidoId);
 
