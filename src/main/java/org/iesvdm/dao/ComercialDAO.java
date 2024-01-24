@@ -11,6 +11,7 @@ public interface ComercialDAO {
 	public void create(Comercial cliente);
 	
 	public List<Comercial> getAll();
+
 	public List<PedidoDTO> listaPedidosComercial(int id);
 
 	public Optional<Comercial>  find(int id);

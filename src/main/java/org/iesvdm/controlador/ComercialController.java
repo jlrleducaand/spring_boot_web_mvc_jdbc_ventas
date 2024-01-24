@@ -1,12 +1,16 @@
 package org.iesvdm.controlador;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.ComercialDAOImpl;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
+import org.iesvdm.modelo.Pedido;
+import org.iesvdm.service.ClienteService;
 import org.iesvdm.service.ComercialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +29,8 @@ public class ComercialController {
     private ComercialService comercialService;
 
     @Autowired
-    private ComercialDAO comercialDAO;
+    private ClienteService clienteService;
+
 
     //Se utiliza inyección automática por constructor del framework Spring.
     //Por tanto, se puede omitir la anotación Autowired
@@ -34,10 +39,11 @@ public class ComercialController {
 
     //@RequestMapping(value = "/clientes", method = RequestMethod.GET)
     //equivalente a la siguiente anotación
-    @GetMapping("/comerciales") //Al no tener ruta base para el controlador, cada método tiene que tener la ruta completa
+    @GetMapping("/comerciales")
+    //Al no tener ruta base para el controlador, cada método tiene que tener la ruta completa
     public String listar(Model model) {
 
-        List<Comercial> listaComerciales =  comercialService.listAll();
+        List<Comercial> listaComerciales = comercialService.listAll();
         model.addAttribute("listaComerciales", listaComerciales);
 
         return "comerciales";
@@ -45,17 +51,33 @@ public class ComercialController {
     }
 
     @GetMapping("/comerciales/{id}")
-    public String detalle(Model model, @PathVariable Integer id ) {
+    public String detalle(Model model, @PathVariable Integer id) {
 
         // Obtener el detalle del comercial.
         Comercial comercial = comercialService.detalle(id);
         model.addAttribute("comercial", comercial);
 
         // Obtener la lista de pedidos del comercial y añadirla al modelo.
-        List<PedidoDTO> listaPedidos = comercialDAO.listaPedidosComercial(id);
+        List<PedidoDTO> listaPedidos = comercialService.obtenerPedidosPorComercial(id);
         model.addAttribute("listaPedidos", listaPedidos);
 
         // Obtener el detalle del cliente.
+        Cliente cliente = clienteService.detalle(id);
+        model.addAttribute("clientes", cliente);
+
+
+        // Crear un mapa para almacenar los clientes por su ID
+        Map<Integer, Cliente> clientes = new HashMap<>();
+        for (PedidoDTO pedido : listaPedidos) {
+            // Obtener el cliente solo si aún no está en el mapa
+            Cliente clie = comercialService.obtenerClientePorId(pedido.getId_cliente()).get();
+            int idInt = Math.toIntExact(clie.getId());
+
+            if (!clientes.containsKey(clie)) {
+                clientes.put(idInt, clie);
+            }
+        }
+        model.addAttribute("Clientes", clientes);
 
 
         // Nombre de la plantilla
@@ -78,7 +100,7 @@ public class ComercialController {
 
         comercialService.newComercial(comercial);
 
-        return new RedirectView("/comerciales") ;
+        return new RedirectView("/comerciales");
 
     }
 

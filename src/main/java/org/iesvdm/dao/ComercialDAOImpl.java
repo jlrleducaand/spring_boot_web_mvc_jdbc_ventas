@@ -81,7 +81,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 	@Override
 	public List<PedidoDTO> listaPedidosComercial(int id) {
 		List<Pedido> listPed = jdbcTemplate.query(
-				"SELECT * FROM pedido WHERE id_comercial = ? "
+				"SELECT * FROM pedido WHERE pedido.id_comercial = ? "
 				,(rs, rowNum) -> new Pedido(rs.getInt("id"),
 						rs.getDouble("total"),
 						rs.getDate("fecha"),

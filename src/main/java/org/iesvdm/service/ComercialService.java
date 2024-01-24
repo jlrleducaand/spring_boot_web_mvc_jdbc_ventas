@@ -3,10 +3,12 @@ package org.iesvdm.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.iesvdm.dao.ClienteDAO;
 import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.PedidoDAO;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.funcional.MyFunctionalInterface;
+import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,15 +19,17 @@ import org.springframework.stereotype.Service;
 public class ComercialService implements ComercialServiceI {
 
     private ComercialDAO comercialDAO;
-
     private PedidoDAO pedidoDAO;
+    private ClienteDAO clienteDAO;
+
     private MyFunctionalInterface myLambda;
 
     @Autowired
-    public ComercialService(ComercialDAO comercialDAO, PedidoDAO pedidoDAO) {
+    public ComercialService(ComercialDAO comercialDAO, PedidoDAO pedidoDAO, ClienteDAO clienteDAO) {
 
         this.comercialDAO = comercialDAO;
         this.pedidoDAO = pedidoDAO;
+        this.clienteDAO = clienteDAO;
     }
         public List<Comercial> listAll(){
 
@@ -63,5 +67,10 @@ public class ComercialService implements ComercialServiceI {
     @Override
     public List<PedidoDTO> obtenerPedidosPorComercial(int idComercial) {
         return comercialDAO.listaPedidosComercial(idComercial);
+    }
+
+    @Override
+    public Optional<Cliente> obtenerClientePorId(int idCliente) {
+        return clienteDAO.find(idCliente);
     }
 }
