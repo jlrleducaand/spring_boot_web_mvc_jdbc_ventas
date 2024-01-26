@@ -1,12 +1,11 @@
 package org.iesvdm.dao;
 
 import java.sql.PreparedStatement;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.iesvdm.dto.PedidoDTO;
+import org.iesvdm.mapstruct.ComercialMapper;
 import org.iesvdm.mapstruct.PedidoMapper;
 import org.iesvdm.modelo.Comercial;
 import org.iesvdm.modelo.Pedido;
@@ -32,6 +31,10 @@ public class ComercialDAOImpl implements ComercialDAO {
 
 	@Autowired
 	private PedidoMapper pedidoMapper;
+
+	@Autowired
+	private ComercialMapper comercialMapper;
+
 
 
 	@Override
@@ -70,7 +73,6 @@ public class ComercialDAOImpl implements ComercialDAO {
                 							  rs.getString("apellido1"),
                 							  rs.getString("apellido2"), 
                 							  rs.getFloat("comision"))
-                						 	
         );
 		
 		log.info("Devueltos {} registros.", listComer.size());
@@ -89,13 +91,14 @@ public class ComercialDAOImpl implements ComercialDAO {
 						rs.getInt("id_comercial"))
 				, id
 		);
-		// Convertir la lista de entidades Pedido a una lista de PedidoDTO usando el mapeador
-		List<PedidoDTO> listPedDTO = listPed.stream()
+		/*List<PedidoDTO> listPedDTO = listPed.stream()
 				.sorted(Comparator.comparing(Pedido::getId_cliente)
 				.thenComparing(Pedido::getFecha))
 				.map(pedidoMapper::pedidoAPedidolDTO)
-				.collect(Collectors.toList());
+				.collect(Collectors.toList());*/
 
+		// Convertir la lista de entidades Pedido a una lista de PedidoDTO usando el mapeador
+		List<PedidoDTO> listPedDTO = comercialMapper.listPedidoALisPedidoDTO(listPed);
 
 		log.info("Devueltos {} registros.", listPed.size());
 

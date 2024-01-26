@@ -10,14 +10,14 @@
 </head>
 <body>
 <div class="container"  >
-    <div class="row">
-        <div class="col-9">
-            <h1 th:text="#{msg.comerciales}">Comerciales</h1>
+    <div class="row flex-wrap">
+    <div class="col-lg-9 col-md-6 col-sm-12" >
+        <h1 class="mt-4" th:text="#{msg.comerciales}">Comerciales</h1>
         </div>
-        <div class="col-3 ">
-            <form class="d-flex justify-content-between mt-5" action="/comerciales/crear">
-                <input class="row btn-danger  px-5" type="submit" th:value= "#{btn.crear}">
-                <input class="btn-warning px-5" type="button" th:value="#{btn.volver}" value="Volver" onclick="location.href='/index';">
+        <div class="col-lg-3 col-md-6 col-sm-6 mt-4">
+            <form class="d-flex mt-lg-4 mt-md-4  mt-sm-0 gap-2" action="/comerciales/crear">
+                <input class="btn-danger w-100" type="submit" th:value= "#{btn.crear}">
+                <input class="btn-warning w-100" type="button" th:value="#{btn.volver}" value="Volver" onclick="location.href='/index';">
             </form>
         </div>
     </div>
@@ -36,24 +36,24 @@
         <hr/>
     </div>
 
-    <div  class="row text-center py-2" th:each="comercial : ${listaComerciales}" >
+    <div  class="row text-center py-1" th:each="comercial : ${listaComerciales}" >
         <div class="col-1" th:text="${comercial.id}">0</div>
         <div class="col-2" th:text="${comercial.nombre}">nombre</div>
         <div class="col-2" th:text="${comercial.apellido1}">apellido1</div>
         <div class="col-2" th:text="${comercial.apellido2}">apellido2</div>
         <div class="col-2" th:text="${comercial.comision}">comision</div>
-        <div class="col-3" style="overflow: hidden;">
-            <form th:action="@{/comerciales/__${comercial.id}__}" style="display: inline;">
-                <input class="btn-success" type="submit" th:value="#{btn.ver.detalle}"  value="Ver Detalle" />
+        <div class="col-3 d-flex flex-wrap justify-content-between gap-2" style="overflow: hidden;">
+            <form class="flex-grow-1" th:action="@{/comerciales/__${comercial.id}__}" style="display: inline;">
+                <input class="btn-success w-100" type="submit" th:value="#{btn.ver.detalle}"  value="Ver Detalle" />
             </form>
             <!-- <form th:action="@{/comerciales/editar/{id}(id=${comercial.id})}" style="display: inline;"> opcion1 -->
-            <form th:action="@{'/comerciales/editar/' + ${comercial.id}}" style="display: inline;">
-                <input class="btn-warning" type="submit" th:value="#{btn.editar}" value="Editar" />
+            <form class="flex-grow-1" th:action="@{'/comerciales/editar/' + ${comercial.id}}" style="display: inline;">
+                <input class="btn-warning w-100" type="submit" th:value="#{btn.editar}" value="Editar" />
             </form>
             <!-- <form th:action="@{/comercial/borrar/__${comercial.id}__}" method="post" style="display: inline;"> opcion1 -->
 
-            <form th:action="@{/comerciales/borrar/{id}(id=${comercial.id})}" method="post" style="display: inline;">
-                <input class="btn-danger" type="submit" th:value="#{btn.borrar}"  value="Eliminar" />
+            <form class="flex-grow-1" th:action="@{/comerciales/borrar/{id}(id=${comercial.id})}" method="post" style="display: inline;">
+                <input class="btn-danger w-100" type="submit" th:value="#{btn.borrar}"  value="Eliminar" />
             </form>
         </div>
         <hr class="col-9 border-2"/>

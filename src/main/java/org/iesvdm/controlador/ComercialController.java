@@ -1,17 +1,15 @@
 package org.iesvdm.controlador;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DecimalFormat;
+import java.util.*;
 
-import org.iesvdm.dao.ComercialDAO;
-import org.iesvdm.dao.ComercialDAOImpl;
+
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
-import org.iesvdm.modelo.Pedido;
 import org.iesvdm.service.ClienteService;
 import org.iesvdm.service.ComercialService;
+import org.iesvdm.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +28,10 @@ public class ComercialController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private PedidoService pedidoService;
+
 
 
     //Se utiliza inyección automática por constructor del framework Spring.
@@ -53,6 +55,8 @@ public class ComercialController {
     @GetMapping("/comerciales/{id}")
     public String detalle(Model model, @PathVariable Integer id) {
 
+        DecimalFormat df = new DecimalFormat("#.##");
+
         // Obtener el detalle del comercial.
         Comercial comercial = comercialService.detalle(id);
         model.addAttribute("comercial", comercial);
@@ -64,6 +68,16 @@ public class ComercialController {
         // Obtener el detalle del cliente.
         Cliente cliente = clienteService.detalle(id);
         model.addAttribute("clientes", cliente);
+
+        // Obtiene  el Total de los pedidos del comercial
+        OptionalDouble totalDTO = comercialService.obtenerTotalPedidosComercial(id);
+        String totalFormateada = df.format(totalDTO.orElse(0.0));
+        model.addAttribute("total", totalFormateada);
+
+        // Obtine la media de los pedidos del comercial
+        OptionalDouble mediaDTO = comercialService.obtenerMediaPedidosComercial(id);
+        String mediaFormateada = df.format(mediaDTO.orElse(0.0));
+        model.addAttribute("media", mediaFormateada);
 
 
         // Crear un mapa para almacenar los clientes por su ID
@@ -79,6 +93,15 @@ public class ComercialController {
         }
         model.addAttribute("Clientes", clientes);
 
+        //Obtener el Pedido de MAYOR cuantía
+        Optional<PedidoDTO> pedidoMaximo = comercialService.obtenerPedidoDeMayorCuantia(id);
+        PedidoDTO pedidoMax = pedidoMaximo.orElse(null);
+        model.addAttribute("PedidoMax", pedidoMax);
+
+        //Obtener el Pedido de MENOR cuantía
+        Optional<PedidoDTO> pedidoMinimo = comercialService.obtenerPedidoDeMenorCuantia(id);
+        PedidoDTO pedidoMin = pedidoMinimo.orElse(null);
+        model.addAttribute("PedidoMin", pedidoMin);
 
         // Nombre de la plantilla
         return "comercial-detalle";

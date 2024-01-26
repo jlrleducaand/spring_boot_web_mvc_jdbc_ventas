@@ -13,6 +13,8 @@ public class PedidoService {
 
     @Autowired
     private PedidoDAO pedidoDAO;
+    //Si los pedidos tuvieran mas objetos dentro en vez de atributos  habria que
+    // ponerlos aqui tambien.  con @Autowired  (un Cliente en ved de id_Cliente)
 
     //Se utiliza inyección automática por constructor del framework Spring.
     //Por tanto, se puede omitir la anotación Autowired
