@@ -1,5 +1,6 @@
 package org.iesvdm.service;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,7 +68,7 @@ public class ComercialService implements ComercialServiceI {
 
     }
 
-
+    DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     public List<PedidoDTO> obtenerPedidosPorComercial(int idComercial) {
@@ -114,27 +115,29 @@ public class ComercialService implements ComercialServiceI {
                 .orElse(null));
     }
 
+
     @Override
     public List<ClienteDTO> obtenerListaClientesConPedidosComercial(int idComercial) {
         List<PedidoDTO> listaPedidos = obtenerPedidosPorComercial(idComercial);
 
-        // Obtener los IDs de los clientes de esos pedidos sin duplicados
-        Set<Integer> idClientesUnicos = listaPedidos.stream()
-                .map(PedidoDTO::getId_cliente)
-                .collect(Collectors.toSet());
+        // Obtener la suma de pedidos por cliente
+        Map<Integer, Double> sumaPedidosPorCliente = listaPedidos.stream()
+                .collect(Collectors.groupingBy(PedidoDTO::getId_cliente,  // los id van a la key (cliente)
+                        Collectors.summingDouble(PedidoDTO::getTotal)));  // las sumas al value
 
         // Obtener la lista de clientes correspondientes a esos IDs
-        List<ClienteDTO> listaClientesConPedidos = idClientesUnicos.stream()
-                .map(idCliente -> clienteMapper.clienteAClienteDTO(obtenerClientePorId(idCliente).get()))
+        List<ClienteDTO> listaClientesConPedidos = sumaPedidosPorCliente.keySet().stream()
+                .map(idCliente -> {
+                    ClienteDTO clienteDTO = clienteMapper.clienteAClienteDTO(obtenerClientePorId(idCliente).orElse(null));
+                    clienteDTO.setSumaPedidos(Double.parseDouble(df.format(sumaPedidosPorCliente.get(idCliente)/100).replaceAll("[^\\d.]", ""))); // setear el atributo de Cliente
+                    return clienteDTO;
+                })
+                .sorted(Comparator.comparing(ClienteDTO::getSumaPedidos).reversed())
                 .collect(Collectors.toList());
 
         return listaClientesConPedidos;
     }
 
-    @Override
-    public OptionalDouble obtenerTotalPedidosPorClienteDeComercial(int idComercial) {
-        return null;
-    }
 
 
 }

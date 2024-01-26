@@ -25,7 +25,6 @@ public interface ComercialServiceI {
 
     List<ClienteDTO> obtenerListaClientesConPedidosComercial(int idComercial);
 
-    OptionalDouble obtenerTotalPedidosPorClienteDeComercial(int idComercial);
 
 
 }
