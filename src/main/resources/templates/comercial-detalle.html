@@ -77,9 +77,8 @@
 
         </div>
         <div class="mt-2">
-            <!--            <div class=" row text-center py-2 " th:each="pedido : ${listaPedidos}">-->
+            <!--             **************************** MI BUCLE PARA ITERACION LISTA DE PEDIDOS ************************************** -->
             <div class="row text-center py-2 " th:each="pedido : ${listaPedidos}">
-
                 <div class="row">
                     <input class="" th:value="${pedido.id}" value="Id" readonly="readonly"
                            th:class="${pedido.equals(PedidoMax)} ? 'text-white col-2 text-center border-0 bg-success' :
@@ -102,9 +101,9 @@
                             <span th:text="${Clientes[__${pedido.id_cliente}__].nombre}">Nombre-Cliente</span>
                         </a>
                         <p class="d-flex align-self-center" th:text="${pedido.equals(PedidoMax)} ? 'Máx' :
-                        (${pedido.equals(PedidoMin)} ? 'Mín')"></p>
-<!--                           th:class="${pedido.equals(PedidoMin)} ? 'd-flex align-self-center bg-warning' :-->
-<!--                           (${pedido.equals(PedidoMax)} ? 'd-flex align-self-center bg-success' : 'd-flex align-self-center') ></p>-->
+                        (${pedido.equals(PedidoMin)} ? 'Mín')"
+                           th:class="${pedido.equals(PedidoMin)} ? 'btn text-white d-flex align-self-center bg-danger p-2' :
+                           (${pedido.equals(PedidoMax)} ? 'btn text-white d-flex align-self-center bg-success p-2' : 'd-flex align-self-center p-2')"></p>
                     </div>
                 </div>
                 <div class="container">
@@ -114,59 +113,45 @@
         </div>
     </div>
 
+    <!-- ********************************************  LISTADO DE CLIENTES  **************************************** -->
 
     <div class="container">
-        <div class="row d-flex justify-content-between ">
+        <div class="row">
             <h1 class="col-4 mt-3 px-0" th:text="#{msg.cliente.lista}">Lista de Clientes</h1>
-            <div class="d-flex col-5 gap-2 justify-content-end px-0">
-                <p class="text-center text-dark-emphasis">Total de los pedidos<input class="text-center "
-                                                                                     th:value="${total}+ '€'"
-                                                                                     value="total"
-                                                                                     readonly="readonly"></p>
-                <p class="text-center text-dark-emphasis">Media de los pedidos<input class="text-center "
-                                                                                     th:value="${media}+ '€'"
-                                                                                     value="media"
-                                                                                     readonly="readonly"></p>
+
+            <div class="row bg-primary  text-center  py-1 mx-0 ">
+                <div class="col-2  text-white" th:text="#{msg.id}">id</div>
+                <div class="col-2  text-white" th:text="#{msg.nombre}">Nombre</div>
+                <div class="col-2  text-white" th:text="#{msg.apellido1}">Apellido1</div>
+                <div class="col-2  text-white" th:text="#{msg.apellido2}">Apellido2</div>
+                <div class="col-2  text-white" th:text="#{msg.ciudad}">Ciudad</div>
+                <div class="col-2  text-white" th:text="#{msg.categoria}">Categoría</div>
             </div>
-        </div>
-        <div class="row bg-primary  text-center  py-1  ">
-            <div class="col-2  text-white" th:text="#{msg.id}">id</div>
-            <div class="col-2  text-white" th:text="#{msg.total}">Total</div>
-            <div class="col-2  text-white" th:text="#{msg.fecha}">Fecha</div>
-            <div class="col-2  text-white" th:text="#{msg.id_comercial}">ID-Comercial</div>
-            <div class="col-2  text-white" th:text="#{msg.id_cliente}">ID-Cliente</div>
-            <div class="col-2  text-white" th:text="#{msg.nombre}">Nombre</div>
 
-        </div>
-        <div class="mt-2">
-            <!--            <div class=" row text-center py-2 " th:each="pedido : ${listaPedidos}">-->
-            <div class="row text-center py-2 " th:each="pedido : ${listaPedidos}">
 
-                <div class="row">
-                    <input class="" th:value="${pedido.id}" value="Id" readonly="readonly"
-                           th:class="${pedido.equals(PedidoMax)} ? 'text-white col-2 text-center border-0 bg-success' :
-                    (${pedido.equals(PedidoMin)} ? 'text-white col-2 text-center border-0 bg-danger' : 'col-2 text-center border-0')"/>
-                    <input class="" th:value="${pedido.total}" value="Total"
-                           readonly="readonly" th:class="${pedido.equals(PedidoMax)} ? 'text-white col-2 text-center border-0 bg-success' :
-                    (${pedido.equals(PedidoMin)} ? 'text-white col-2 text-center border-0 bg-danger' : 'col-2 text-center border-0')"/>
-                    <input class="" th:value="${pedido.fecha}" value="Fecha"
-                           readonly="readonly" th:class="${pedido.equals(PedidoMax)} ? 'text-white col-2 text-center border-0 bg-success' :
-                    (${pedido.equals(PedidoMin)} ? 'text-white col-2 text-center border-0 bg-danger' : 'col-2 text-center border-0')"/>
-                    <input class="" th:value="${pedido.id_comercial}" value="ID-Comercial"
-                           readonly="readonly" th:class="${pedido.equals(PedidoMax)} ? 'text-white col-2 text-center border-0 bg-success' :
-                    (${pedido.equals(PedidoMin)} ? 'text-white col-2 text-center border-0 bg-danger' : 'col-2 text-center border-0')"/>
-                    <input class="" th:value="${pedido.id_cliente}" value="ID-Cliente"
-                           readonly="readonly" th:class="${pedido.equals(PedidoMax)} ? 'text-white col-2 text-center border-0 bg-success' :
-                    (${pedido.equals(PedidoMin)} ? 'text-white col-2 text-center border-0 bg-danger' : 'col-2 text-center border-0')"/>
-                    <div class="col-2 d-flex gap-2">
-                        <a class="btn-success flex-grow-1 p-2 text-center text-decoration-none"
-                           th:href="@{/clientes/{id}(id=${Clientes[__${pedido.id_cliente}__].id})}">
-                            <span th:text="${Clientes[__${pedido.id_cliente}__].nombre}">Nombre-Cliente</span>
-                        </a>
-                        <p class="d-flex align-self-center" th:text="${pedido.equals(PedidoMax)} ? 'Máx' :
-                        (${pedido.equals(PedidoMin)} ? 'Mín' : '')"></p>
+            <div class="mt-2">
+
+
+                <!-- Iterar sobre la lista de pedidos para sacar los id_clientes e iterar sobre el mapa id_cliente - cliente -->
+                <div class="row text-center py-2 " th:each="clienteConPedido : ${ClientesUnicos}">
+
+                    <!-- Mostrar la información del cliente (únicamente para clientes únicos) -->
+                    <div class="row">
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.id}" value="Id"
+                               readonly="readonly"/>
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.nombre}" value="nombre"
+                               readonly="readonly"/>
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.apellido1}" value="apellido1"
+                               readonly="readonly"/>
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.apellido2}" value="apellido2"
+                               readonly="readonly"/>
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.ciudad}" value="ciudad"
+                               readonly="readonly"/>
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.categoria}" value="categoria"
+                               readonly="readonly"/>
                     </div>
                 </div>
+
                 <div class="container">
                     <hr class=" border-2">
                 </div>

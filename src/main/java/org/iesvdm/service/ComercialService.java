@@ -7,8 +7,8 @@ import org.iesvdm.dao.ClienteDAO;
 import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.PedidoDAO;
 import org.iesvdm.dto.ClienteDTO;
-import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.dto.PedidoDTO;
+import org.iesvdm.mapstruct.ClienteMapper;
 import org.iesvdm.mapstruct.ComercialMapper;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
@@ -24,15 +24,19 @@ public class ComercialService implements ComercialServiceI {
     private final PedidoDAO pedidoDAO;
     private final ClienteDAO clienteDAO;
     private final ComercialMapper comercialMapper;
+    private final ClienteMapper clienteMapper;
 
 
     @Autowired
-    public ComercialService(ComercialDAO comercialDAO, PedidoDAO pedidoDAO, ClienteDAO clienteDAO, ComercialMapper comercialMapper) {
+    public ComercialService(ComercialDAO comercialDAO, PedidoDAO pedidoDAO,
+                            ClienteDAO clienteDAO, ComercialMapper comercialMapper,
+                            ClienteMapper clienteMapper) {
 
         this.comercialDAO = comercialDAO;
         this.pedidoDAO = pedidoDAO;
         this.clienteDAO = clienteDAO;
         this.comercialMapper = comercialMapper;
+        this.clienteMapper = clienteMapper;
     }
 
     public List<Comercial> listAll() {
@@ -75,6 +79,7 @@ public class ComercialService implements ComercialServiceI {
         return clienteDAO.find(idCliente);
     }
 
+
     @Override
     public OptionalDouble obtenerMediaPedidosComercial(int  idcomercial) {
         // Obtener la lista de pedidos y calcular la media
@@ -94,12 +99,12 @@ public class ComercialService implements ComercialServiceI {
         return total;
     }
 
+
     @Override
     public Optional<PedidoDTO> obtenerPedidoDeMayorCuantia(int idComercial) {
         return Optional.ofNullable(comercialDAO.listaPedidosComercial(idComercial).stream()
                 .max(Comparator.comparing(PedidoDTO::getTotal))
                 .orElse(null));
-
     }
 
     @Override
@@ -110,39 +115,26 @@ public class ComercialService implements ComercialServiceI {
     }
 
     @Override
-    public List<ClienteDTO> obtenerListadoClientesOrdenadoPorCuantia(int idComercial) {
-        return null;
+    public List<ClienteDTO> obtenerListaClientesConPedidosComercial(int idComercial) {
+        List<PedidoDTO> listaPedidos = obtenerPedidosPorComercial(idComercial);
+
+        // Obtener los IDs de los clientes de esos pedidos sin duplicados
+        Set<Integer> idClientesUnicos = listaPedidos.stream()
+                .map(PedidoDTO::getId_cliente)
+                .collect(Collectors.toSet());
+
+        // Obtener la lista de clientes correspondientes a esos IDs
+        List<ClienteDTO> listaClientesConPedidos = idClientesUnicos.stream()
+                .map(idCliente -> clienteMapper.clienteAClienteDTO(obtenerClientePorId(idCliente).get()))
+                .collect(Collectors.toList());
+
+        return listaClientesConPedidos;
     }
 
-//    @Override
-//    public List<ClienteDTO> obtenerListadoClientesOrdenadoPorCuantia(int idComercial) {
-//        // Obtener la lista de pedidos del comercial
-//        List<PedidoDTO> listaPedidos = obtenerPedidosPorComercial(idComercial);
-//
-//        // Obtener los IDs de los clientes de esos pedidos
-//        List<Integer> idClientes = listaPedidos.stream()
-//                .map(PedidoDTO::getId_cliente)
-//                .collect(Collectors.toList());
-//
-//        // Obtener la lista de clientes correspondientes a esos IDs
-//        List<Cliente> listaClientes = idClientes.stream()
-//                .map(this::obtenerClientePorId)
-//                .filter(Optional::isPresent)
-//                .map(Optional::get)
-//                .collect(Collectors.toList());
-//
-//        // Ordenar la lista de clientes por la cuantía total de los pedidos
-//        List<ClienteDTO> listClienteDTO = listaClientes.stream()
-//                .map(cliente -> comercialMapper.)
-//    }
-
-    // Método para calcular la cuantía total de los pedidos de un cliente
-//    private double calcularCuantiaTotalCliente(Cliente cliente, List<PedidoDTO> listaPedidos) {
-//        return listaPedidos.stream()
-//                .filter(pedido -> pedido.getId_cliente() == cliente.getId())
-//                .mapToDouble(PedidoDTO::getTotal)
-//                .sum();
-//    }
+    @Override
+    public OptionalDouble obtenerTotalPedidosPorClienteDeComercial(int idComercial) {
+        return null;
+    }
 
 
 }

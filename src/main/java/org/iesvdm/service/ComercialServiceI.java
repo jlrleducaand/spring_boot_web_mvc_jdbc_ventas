@@ -23,8 +23,9 @@ public interface ComercialServiceI {
 
     Optional<PedidoDTO> obtenerPedidoDeMenorCuantia(int idComercial);
 
-    List<ClienteDTO> obtenerListadoClientesOrdenadoPorCuantia(int idComercial);
+    List<ClienteDTO> obtenerListaClientesConPedidosComercial(int idComercial);
 
+    OptionalDouble obtenerTotalPedidosPorClienteDeComercial(int idComercial);
 
 
 }

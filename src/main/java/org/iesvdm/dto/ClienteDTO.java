@@ -18,5 +18,7 @@ public class ClienteDTO {
     private String ciudad;
     private int categoria;
 
+    private Double sumaPedidos;
+
 
 }

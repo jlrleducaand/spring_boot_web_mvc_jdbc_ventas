@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 
+import org.iesvdm.dto.ClienteDTO;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
@@ -79,7 +80,6 @@ public class ComercialController {
         String mediaFormateada = df.format(mediaDTO.orElse(0.0));
         model.addAttribute("media", mediaFormateada);
 
-
         // Crear un mapa para almacenar los clientes por su ID
         Map<Integer, Cliente> clientes = new HashMap<>();
         for (PedidoDTO pedido : listaPedidos) {
@@ -103,6 +103,10 @@ public class ComercialController {
         PedidoDTO pedidoMin = pedidoMinimo.orElse(null);
         model.addAttribute("PedidoMin", pedidoMin);
 
+        //Obtener los clientesUnicosConPedidos
+        List<ClienteDTO> clientesConPedidos = comercialService.obtenerListaClientesConPedidosComercial(id);
+        model.addAttribute("ClientesUnicos", clientesConPedidos);
+
         // Nombre de la plantilla
         return "comercial-detalle";
 
@@ -113,7 +117,6 @@ public class ComercialController {
 
         Comercial comercial = new Comercial();
         model.addAttribute("comercial", comercial);
-
         return "comercial-crear";
 
     }
@@ -122,7 +125,6 @@ public class ComercialController {
     public RedirectView submitCrear(@ModelAttribute("comercial") Comercial comercial) {
 
         comercialService.newComercial(comercial);
-
         return new RedirectView("/comerciales");
 
     }
@@ -132,17 +134,13 @@ public class ComercialController {
 
         Comercial comercial = comercialService.detalle(id);
         model.addAttribute("comercial", comercial);
-
         return "comercial-editar";
-
     }
-
 
     @PostMapping("/comerciales/editar/{id}")
     public RedirectView submitEditar(@ModelAttribute("comercial") Comercial comercial) {
 
         comercialService.replaceComercial(comercial);
-
         return new RedirectView("/comerciales");
     }
 
@@ -150,7 +148,6 @@ public class ComercialController {
     public RedirectView submitBorrar(@PathVariable Integer id) {
 
         comercialService.deleteComercial(id);
-
         return new RedirectView("/comerciales");
     }
 
