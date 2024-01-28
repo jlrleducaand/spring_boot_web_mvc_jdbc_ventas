@@ -117,7 +117,7 @@ public class ComercialService implements ComercialServiceI {
 
 
     @Override
-    public List<ClienteDTO> obtenerListaClientesConPedidosComercial(int idComercial) {
+    public List<ClienteDTO> obtenerListaClientesConPedidosPorIdComercial(int idComercial) {
         List<PedidoDTO> listaPedidos = obtenerPedidosPorComercial(idComercial);
 
         // Obtener la suma de pedidos por cliente

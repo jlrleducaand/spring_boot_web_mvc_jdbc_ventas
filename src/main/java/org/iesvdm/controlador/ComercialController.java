@@ -68,7 +68,7 @@ public class ComercialController {
 
         // Obtener el detalle del cliente.
         Cliente cliente = clienteService.detalle(id);
-        model.addAttribute("clientes", cliente);
+        model.addAttribute("cliente", cliente);
 
         // Obtiene  el Total de los pedidos del comercial
         OptionalDouble totalDTO = comercialService.obtenerTotalPedidosComercial(id);
@@ -82,11 +82,13 @@ public class ComercialController {
 
         // Crear un mapa para almacenar los clientes por su ID
         Map<Integer, Cliente> clientes = new HashMap<>();
+        //recorro la lista de pedidos  que tengo Arriba
         for (PedidoDTO pedido : listaPedidos) {
-            // Obtener el cliente solo si aún no está en el mapa
+            // Obtener el cliente del pedido
             Cliente clie = comercialService.obtenerClientePorId(pedido.getId_cliente()).get();
+            //conversion tipos
             int idInt = Math.toIntExact(clie.getId());
-
+            // Solo si aún no está en el mapa lo añado
             if (!clientes.containsKey(clie)) {
                 clientes.put(idInt, clie);
             }
@@ -104,7 +106,7 @@ public class ComercialController {
         model.addAttribute("PedidoMin", pedidoMin);
 
         //Obtener los clientesUnicosConPedidos
-        List<ClienteDTO> clientesConPedidos = comercialService.obtenerListaClientesConPedidosComercial(id);
+        List<ClienteDTO> clientesConPedidos = comercialService.obtenerListaClientesConPedidosPorIdComercial(id);
         model.addAttribute("ClientesUnicos", clientesConPedidos);
 
         // Nombre de la plantilla

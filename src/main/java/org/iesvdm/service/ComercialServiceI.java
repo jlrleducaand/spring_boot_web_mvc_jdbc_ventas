@@ -3,7 +3,6 @@ package org.iesvdm.service;
 import org.iesvdm.dto.ClienteDTO;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Cliente;
-import org.iesvdm.modelo.Comercial;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,7 @@ public interface ComercialServiceI {
 
     Optional<PedidoDTO> obtenerPedidoDeMenorCuantia(int idComercial);
 
-    List<ClienteDTO> obtenerListaClientesConPedidosComercial(int idComercial);
+    List<ClienteDTO> obtenerListaClientesConPedidosPorIdComercial(int idComercial);
 
 
 

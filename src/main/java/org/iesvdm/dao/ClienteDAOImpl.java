@@ -146,5 +146,9 @@ public class ClienteDAOImpl implements ClienteDAO {
 		log.info("Delete de Cliente con {} registros eliminados.", rows);		
 		
 	}
+
+
+
+
 	
 }

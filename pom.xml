@@ -106,34 +106,32 @@
                         </exclude>
                     </excludes>
                 </configuration>
-
-               <!-- SOLO PARA ECLIPSE
-
-               <resources>
-                    <resource>
-                        <directory>src/main/resources/</directory>
-                        <includes>
-                            <include>**/*.html</include>
-                            <include>**/*.properties</include>
-                        </includes>
-                    </resource>
-                </resources>-->
-
+                <!--SOLO PARA ECLIPSE
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>-->
             </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>org.springframework.boot</groupId>-->
-            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--                <configuration>-->
-            <!--                    <excludes>-->
-            <!--                        <exclude>-->
-            <!--                            <groupId>org.projectlombok</groupId>-->
-            <!--                            <artifactId>lombok</artifactId>-->
-            <!--                        </exclude>-->
-            <!--                    </excludes>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
-
         </plugins>
+        <!-- SOLO PARA ECLIPSE
+
+              <resources>
+                   <resource>
+                       <directory>src/main/resources/</directory>
+                       <includes>
+                           <include>**/*.html</include>
+                           <include>**/*.properties</include>
+                       </includes>
+                   </resource>
+               </resources>-->
     </build>
 
 </project>

@@ -6,7 +6,9 @@ body {
 root {
   display: block;
 }
-
+a{
+  text-decoration: none;
+}
 table {
   font-family: "Trebuchet MS", sans-serif;
   font-size: 16px;
