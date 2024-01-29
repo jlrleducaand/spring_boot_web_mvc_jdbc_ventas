@@ -122,13 +122,26 @@ public class ComercialService implements ComercialServiceI {
 
     @Override
     public List<ClienteDTO> obtenerListaClientesConPedidosPorIdComercial(int idComercial) {
-        return null;
+        List<PedidoDTO> lstPediComercial = obtenerPedidosPorComercial(idComercial);
+
+        // Obtener clientes únicos que tienen pedidos con el comercial específico
+        List<ClienteDTO> lstClieConPedidos = lstPediComercial.stream()
+                .map(PedidoDTO::getId_cliente)  // Obtener solo los IDs de clientes
+                .distinct()  // Filtrar clientes únicos
+                .map(idCliente -> clienteDAO.find(idCliente))  // Obtener clientes por ID
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(clienteMapper::clienteAClienteDTO)  // Convertir a DTO si es necesario
+                .collect(Collectors.toList());
+
+        return lstClieConPedidos;
     }
 
 
+
     @Override
-    public List<PedidoDTO> obtenerListaPedidoPorIdIdComercialPorIdCliente(int idComercial, int idCliente) {
-        List<PedidoDTO> lstPorComer = obtenerPedidosPorComercial(idComercial);
+    public List<PedidoDTO> obtenerListaPedidoDeThisComercialIdCliente(int idCliente) {
+        List<PedidoDTO> lstPorComer = obtenerPedidosPorComercial(this.comercialDTO.getId());
 
         // Filtrar la lista de pedidos para obtener solo los relacionados con el cliente específico
         List<PedidoDTO> lstPorComerPorClie = lstPorComer.stream()
@@ -136,11 +149,6 @@ public class ComercialService implements ComercialServiceI {
                 .collect(Collectors.toList());
 
         return lstPorComerPorClie;
-    }
-
-    public List<Integer> listComercilesPorCliente(int idCliente){
-
-        return null;
     }
 
 }

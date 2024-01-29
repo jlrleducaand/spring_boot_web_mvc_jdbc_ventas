@@ -51,8 +51,9 @@ public class ClienteController {
     @GetMapping("/clientes/{id}")
     public String detalle(Model model, @PathVariable Integer id) {
 
-//        //Obtener el listado de Pedidos por Comercial y Cliente
-//        List<PedidoDTO> lstPedComClie = comercialService.obtenerListaPedidoPorIdIdComercialPorIdCliente()
+        //Obtener el listado de Pedidos por Comercial y Cliente
+        List<PedidoDTO> lstPedComClie = comercialService.obtenerListaPedidoDeThisComercialIdCliente(id);
+        model.addAttribute("numPedido", lstPedComClie);
 
         // Obtener el detalle del cliente
         Cliente cliente =   clienteService.detalle(id);
