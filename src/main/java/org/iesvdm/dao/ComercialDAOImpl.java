@@ -158,4 +158,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 
 	}
 
+
+
+
 }

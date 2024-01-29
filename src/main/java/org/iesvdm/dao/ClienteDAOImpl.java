@@ -3,8 +3,12 @@ package org.iesvdm.dao;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.jdbc.core.RowMapper;
+
+import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.modelo.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -149,6 +153,37 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 
 
+	public List<ComercialDTO> ComercialesConTotalPedidosDeCliente(int idCliente) {
+		String sql = "SELECT " +
+				"c.id AS id, " +
+				"c.nombre AS nombre, " +
+				"c.apellido1 AS apellido1, " +
+				"c.apellido2 AS apellido2, " +
+				"c.comision AS comision, " +
+				"COUNT(p.id) AS num_pedidos, " +
+				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 90 THEN 1 ELSE 0 END) AS num_pedidos_trim, " +
+				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 365 THEN 1 ELSE 0 END) AS num_pedidos_anio, " +
+				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 1825 THEN 1 ELSE 0 END) AS num_pedidos_lustro " +
+				"FROM " +
+				"comercial c " +
+				"JOIN " +
+				"pedido p ON c.id = p.id_comercial " +
+				"JOIN " +
+				"cliente cl ON p.id_cliente = cl.id " +
+				"WHERE " +
+				"cl.id = ? " +
+				"GROUP BY " +
+				"c.id, c.nombre, c.apellido1, c.apellido2, c.comision";
 
-	
+		// Utilizar un RowMapper para mapear el resultado a objetos ComercialDTO
+		RowMapper<ComercialDTO> rowMapper = new BeanPropertyRowMapper<>(ComercialDTO.class);
+
+		// Ejecutar la consulta y mapear los resultados
+		return jdbcTemplate.query(sql, rowMapper, idCliente);
+	}
+
+
+
+
+
 }

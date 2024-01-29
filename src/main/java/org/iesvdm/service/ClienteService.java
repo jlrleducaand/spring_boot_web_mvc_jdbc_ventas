@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.iesvdm.dao.ClienteDAO;
-import org.iesvdm.dao.ComercialDAO;
-import org.iesvdm.dao.PedidoDAO;
-import org.iesvdm.dao.PedidoDAOImpl;
+import org.iesvdm.dao.*;
 import org.iesvdm.dto.ClienteDTO;
 import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.dto.PedidoDTO;
@@ -32,6 +29,7 @@ public class ClienteService implements ClienteServiceI{
     private ClienteMapper clienteMapper;
     private PedidoMapper pedidoMapper;
     private ComercialMapper comercialMapper;
+    private ClienteDAOImpl clienteDAOImpl;
 
 
     @Autowired
@@ -41,7 +39,8 @@ public class ClienteService implements ClienteServiceI{
                           ClienteDTO clienteDTO,
                           ClienteMapper clienteMapper,
                           PedidoMapper pedidoMapper,
-                          ComercialMapper comercialMapper)
+                          ComercialMapper comercialMapper,
+                          ClienteDAOImpl clienteDAOImpl)
     {
         this.clienteDAO = clienteDAO;
         this.pedidoDAOImpl = pedidoDAOImpl;
@@ -50,6 +49,7 @@ public class ClienteService implements ClienteServiceI{
         this.clienteMapper = clienteMapper;
         this.pedidoMapper = pedidoMapper;
         this.comercialMapper = comercialMapper;
+        this.clienteDAOImpl = clienteDAOImpl;
     }
 
     //Se utiliza inyección automática por constructor del framework Spring.
@@ -122,6 +122,11 @@ public class ClienteService implements ClienteServiceI{
         return lstComerciales; //alternativa  lstCom
     }
 
+    @Override
+    public List<ComercialDTO> obtenerEstadisticaYComerciales(int idCliente) {
+
+        return clienteDAOImpl.ComercialesConTotalPedidosDeCliente(idCliente);
+    }
 
 
     public int obtenerNumPedidosPorComercialYCliente(int idComercial, int idCliente) {

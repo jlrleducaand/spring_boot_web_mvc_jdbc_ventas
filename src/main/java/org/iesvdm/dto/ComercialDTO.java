@@ -30,6 +30,9 @@ public class ComercialDTO {
     private Double total;
     private Double media;
     private int numPedidos;
+    private int numPedidosTrim;
+    private int numPedidosAnio;
+    private int numPedidosLustro;
 
 
     // Constructor que acepta un objeto Comercial y el número de pedidos

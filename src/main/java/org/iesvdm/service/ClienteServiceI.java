@@ -1,5 +1,6 @@
 package org.iesvdm.service;
 
+import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Comercial;
 import org.iesvdm.modelo.Pedido;
@@ -11,4 +12,8 @@ public interface ClienteServiceI {
     public List<Pedido> obtenerPedidosPorComercial(int idComercial);
 
     public List<Comercial> obtenerListComercialesAsociadosConPedidos(int idCliente);
+
+    public List<ComercialDTO> obtenerEstadisticaYComerciales(int idCliente);
+
+
 }

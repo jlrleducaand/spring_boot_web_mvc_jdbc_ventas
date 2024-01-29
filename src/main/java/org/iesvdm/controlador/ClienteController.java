@@ -72,6 +72,10 @@ public class ClienteController {
         }
         model.addAttribute("comercialesConPedidos", comercialesConPedidos);
 
+
+        List<ComercialDTO> listaComercialStadistica = clienteService.obtenerEstadisticaYComerciales(id);
+        model.addAttribute("comercialEstadistica", listaComercialStadistica);
+
         return "cliente-detalle";
 
     }
