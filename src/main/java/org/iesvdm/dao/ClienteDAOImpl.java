@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 //Anotación lombok para logging (traza) de la aplicación
 @Slf4j
-//Un Repository es un componente y a su vez un estereotipo de Spring 
+//Un Repository es un componente y a su vez un estereotipo de Spring para el CRUD
 //que forma parte de la ‘capa de persistencia con  Acceso a BBDD’.
 @Repository
 public class ClienteDAOImpl implements ClienteDAO {

@@ -6,8 +6,9 @@ import java.util.stream.Collectors;
 
 import org.iesvdm.dao.ClienteDAO;
 import org.iesvdm.dao.ComercialDAO;
-import org.iesvdm.dao.PedidoDAO;
+import org.iesvdm.dao.PedidoDAOImpl;
 import org.iesvdm.dto.ClienteDTO;
+import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.mapstruct.ClienteMapper;
 import org.iesvdm.mapstruct.ComercialMapper;
@@ -22,22 +23,25 @@ import org.springframework.stereotype.Service;
 public class ComercialService implements ComercialServiceI {
 
     private final ComercialDAO comercialDAO;
-    private final PedidoDAO pedidoDAO;
+    private final PedidoDAOImpl pedidoDAOImpl;
     private final ClienteDAO clienteDAO;
     private final ComercialMapper comercialMapper;
+    private final ComercialDTO comercialDTO;
     private final ClienteMapper clienteMapper;
 
 
+
     @Autowired
-    public ComercialService(ComercialDAO comercialDAO, PedidoDAO pedidoDAO,
+    public ComercialService(ComercialDAO comercialDAO, PedidoDAOImpl pedidoDAOImpl,
                             ClienteDAO clienteDAO, ComercialMapper comercialMapper,
-                            ClienteMapper clienteMapper) {
+                            ClienteMapper clienteMapper, ComercialDTO comercialDTO) {
 
         this.comercialDAO = comercialDAO;
-        this.pedidoDAO = pedidoDAO;
+        this.pedidoDAOImpl = pedidoDAOImpl;
         this.clienteDAO = clienteDAO;
         this.comercialMapper = comercialMapper;
         this.clienteMapper = clienteMapper;
+        this.comercialDTO = comercialDTO;
     }
 
     public List<Comercial> listAll() {
@@ -46,6 +50,7 @@ public class ComercialService implements ComercialServiceI {
     }
 
     public Comercial detalle(Integer id) {
+
         return comercialDAO.find(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comercial no encontrado"));
     }
@@ -115,30 +120,28 @@ public class ComercialService implements ComercialServiceI {
                 .orElse(null));
     }
 
-
     @Override
     public List<ClienteDTO> obtenerListaClientesConPedidosPorIdComercial(int idComercial) {
-        List<PedidoDTO> listaPedidos = obtenerPedidosPorComercial(idComercial);
-
-        // Obtener la suma de pedidos por cliente
-        Map<Integer, Double> sumaPedidosPorCliente = listaPedidos.stream()
-                .collect(Collectors.groupingBy(PedidoDTO::getId_cliente,  // los id van a la key (cliente)
-                        Collectors.summingDouble(PedidoDTO::getTotal)));  // las sumas al value
-
-        // Obtener la lista de clientes correspondientes a esos IDs
-        List<ClienteDTO> listaClientesConPedidos = sumaPedidosPorCliente.keySet().stream()
-                .map(idCliente -> {
-                    ClienteDTO clienteDTO = clienteMapper.clienteAClienteDTO(obtenerClientePorId(idCliente).orElse(null));
-                    clienteDTO.setSumaPedidos(Double.parseDouble(df.format(sumaPedidosPorCliente.get(idCliente)/100).replaceAll("[^\\d.]", ""))); // setear el atributo de Cliente
-                    return clienteDTO;
-                })
-                .sorted(Comparator.comparing(ClienteDTO::getSumaPedidos).reversed())
-                .collect(Collectors.toList());
-
-        return listaClientesConPedidos;
+        return null;
     }
 
 
+    @Override
+    public List<PedidoDTO> obtenerListaPedidoPorIdIdComercialPorIdCliente(int idComercial, int idCliente) {
+        List<PedidoDTO> lstPorComer = obtenerPedidosPorComercial(idComercial);
+
+        // Filtrar la lista de pedidos para obtener solo los relacionados con el cliente específico
+        List<PedidoDTO> lstPorComerPorClie = lstPorComer.stream()
+                .filter(pedido -> pedido.getId_cliente() == idCliente)
+                .collect(Collectors.toList());
+
+        return lstPorComerPorClie;
+    }
+
+    public List<Integer> listComercilesPorCliente(int idCliente){
+
+        return null;
+    }
 
 }
 

@@ -168,6 +168,8 @@ public class PedidoDAOImpl implements PedidoDAO{
         int rows = jdbcTemplate.update("DELETE FROM pedido WHERE id = ?", id);
 
         log.info("Delete de Pedido con {} registros eliminados.", rows);
-
     }
+
+
+
 }

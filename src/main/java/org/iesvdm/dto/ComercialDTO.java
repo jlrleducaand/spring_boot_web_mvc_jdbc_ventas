@@ -5,12 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.iesvdm.modelo.Pedido;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Repository
+
 // no usamos herencia con lombok no se integra bien con las anotaciones de generación automática
 // del constructor
 public class ComercialDTO {
