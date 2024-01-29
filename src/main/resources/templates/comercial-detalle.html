@@ -132,23 +132,23 @@
 
 
                 <!-- Iterar sobre la lista de pedidos para sacar los id_clientes e iterar sobre el mapa id_cliente - cliente -->
-                <div class="row text-center py-2 " th:each="cliente : ${ClientesUnicos}">
+                <div class="row text-center py-2 " th:each="clienteConPedido : ${ClientesUnicos}">
 
                     <!-- Mostrar la información del cliente (únicamente para clientes únicos) -->
                     <div class="row">
-                        <input class="col-1 text-center border-0" th:value="${cliente.id}" value="Id"
+                        <input class="col-1 text-center border-0" th:value="${clienteConPedido.id}" value="Id"
                                readonly="readonly"/>
-                        <input class="col-2 text-center border-0" th:value="${cliente.nombre}" value="nombre"
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.nombre}" value="nombre"
                                readonly="readonly"/>
-                        <input class="col-2 text-center border-0" th:value="${cliente.apellido1}" value="apellido1"
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.apellido1}" value="apellido1"
                                readonly="readonly"/>
-                        <input class="col-2 text-center border-0" th:value="${cliente.apellido2}" value="apellido2"
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.apellido2}" value="apellido2"
                                readonly="readonly"/>
-                        <input class="col-2 text-center border-0" th:value="${cliente.ciudad}" value="ciudad"
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.ciudad}" value="ciudad"
                                readonly="readonly"/>
-                        <input class="col-1 text-center border-0" th:value="${cliente.categoria}" value="categoria"
+                        <input class="col-1 text-center border-0" th:value="${clienteConPedido.categoria}" value="categoria"
                                readonly="readonly"/>
-                        <input class="col-2 text-center border-0" th:value="${cliente.sumaPedidos}+'€'" value="Id"
+                        <input class="col-2 text-center border-0" th:value="${clienteConPedido.sumaPedidos}+'€'" value="Id"
                                readonly="readonly"/>
                     </div>
                 </div>

@@ -122,26 +122,31 @@ public class ComercialService implements ComercialServiceI {
 
     @Override
     public List<ClienteDTO> obtenerListaClientesConPedidosPorIdComercial(int idComercial) {
-        List<PedidoDTO> lstPediComercial = obtenerPedidosPorComercial(idComercial);
+        List<PedidoDTO> listaPedidos = obtenerPedidosPorComercial(idComercial);
 
-        // Obtener clientes únicos que tienen pedidos con el comercial específico
-        List<ClienteDTO> lstClieConPedidos = lstPediComercial.stream()
-                .map(PedidoDTO::getId_cliente)  // Obtener solo los IDs de clientes
-                .distinct()  // Filtrar clientes únicos
-                .map(idCliente -> clienteDAO.find(idCliente))  // Obtener clientes por ID
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .map(clienteMapper::clienteAClienteDTO)  // Convertir a DTO si es necesario
+        // Obtener la suma de pedidos por cliente
+        Map<Integer, Double> sumaPedidosPorCliente = listaPedidos.stream()
+                .collect(Collectors.groupingBy(PedidoDTO::getId_cliente,  // los id van a la key (cliente)
+                        Collectors.summingDouble(PedidoDTO::getTotal)));  // las sumas al value
+
+        // Obtener la lista de clientes correspondientes a esos IDs
+        List<ClienteDTO> listaClientesConPedidos = sumaPedidosPorCliente.keySet().stream()
+                .map(idCliente -> {
+                    ClienteDTO clienteDTO = clienteMapper.clienteAClienteDTO(obtenerClientePorId(idCliente).orElse(null));
+                    clienteDTO.setSumaPedidos(Double.parseDouble(df.format(sumaPedidosPorCliente.get(idCliente)/100).replaceAll("[^\\d.]", ""))); // setear el atributo de Cliente
+                    return clienteDTO;
+                })
+                .sorted(Comparator.comparing(ClienteDTO::getSumaPedidos).reversed())
                 .collect(Collectors.toList());
 
-        return lstClieConPedidos;
+        return listaClientesConPedidos;
     }
 
 
 
     @Override
-    public List<PedidoDTO> obtenerListaPedidoDeThisComercialIdCliente(int idCliente) {
-        List<PedidoDTO> lstPorComer = obtenerPedidosPorComercial(this.comercialDTO.getId());
+    public List<PedidoDTO> obtenerListaPedidoDeThisComercialIdCliente(int idComercial, int idCliente) {
+        List<PedidoDTO> lstPorComer = obtenerPedidosPorComercial(idComercial);
 
         // Filtrar la lista de pedidos para obtener solo los relacionados con el cliente específico
         List<PedidoDTO> lstPorComerPorClie = lstPorComer.stream()
@@ -150,6 +155,7 @@ public class ComercialService implements ComercialServiceI {
 
         return lstPorComerPorClie;
     }
+
 
 }
 

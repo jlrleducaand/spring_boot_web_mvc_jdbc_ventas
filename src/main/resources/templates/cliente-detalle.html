@@ -76,13 +76,14 @@
         <div>
             <hr/>
         </div>
-        <div class="row text-center py-1" th:each="comercial : ${listaComercial}">
+        <div class="row text-center py-1" th:each="comercial: ${comercialesConPedidos}">
             <div class="col-1" th:text="${comercial.id}">0</div>
             <div class="col-2" th:text="${comercial.nombre}">nombre</div>
             <div class="col-2" th:text="${comercial.apellido1}">apellido1</div>
             <div class="col-2" th:text="${comercial.apellido2}">apellido2</div>
             <div class="col-2" th:text="${comercial.comision}">comision</div>
-            <div class="col-2" th:text="${numPedido.size()}">NºPedidos</div>
+            <div class="col-2" th:text="${comercial.numPedidos}">NºPedidos</div>
+
 
         </div>
     </div>
@@ -96,4 +97,4 @@
         crossorigin="anonymous"></script>
 
 </body>
-</html></html>
+</html>

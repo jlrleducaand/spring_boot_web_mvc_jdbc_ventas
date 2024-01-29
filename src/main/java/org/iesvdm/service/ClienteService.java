@@ -9,18 +9,21 @@ import org.iesvdm.dao.ComercialDAO;
 import org.iesvdm.dao.PedidoDAO;
 import org.iesvdm.dao.PedidoDAOImpl;
 import org.iesvdm.dto.ClienteDTO;
+import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.mapstruct.ClienteMapper;
+import org.iesvdm.mapstruct.ComercialMapper;
 import org.iesvdm.mapstruct.PedidoMapper;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
+import org.iesvdm.modelo.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service  //solo espero logica de negocios
-public class ClienteService {
+public class ClienteService implements ClienteServiceI{
 
     private ClienteDAO clienteDAO;
     private PedidoDAO pedidoDAOImpl;
@@ -28,6 +31,7 @@ public class ClienteService {
     private ClienteDTO clienteDTO;
     private ClienteMapper clienteMapper;
     private PedidoMapper pedidoMapper;
+    private ComercialMapper comercialMapper;
 
 
     @Autowired
@@ -36,7 +40,8 @@ public class ClienteService {
                           ComercialDAO comercialDAO,
                           ClienteDTO clienteDTO,
                           ClienteMapper clienteMapper,
-                          PedidoMapper pedidoMapper)
+                          PedidoMapper pedidoMapper,
+                          ComercialMapper comercialMapper)
     {
         this.clienteDAO = clienteDAO;
         this.pedidoDAOImpl = pedidoDAOImpl;
@@ -44,6 +49,7 @@ public class ClienteService {
         this.clienteDTO = clienteDTO;
         this.clienteMapper = clienteMapper;
         this.pedidoMapper = pedidoMapper;
+        this.comercialMapper = comercialMapper;
     }
 
     //Se utiliza inyección automática por constructor del framework Spring.
@@ -85,33 +91,49 @@ public class ClienteService {
 
     }
 
-    public List<PedidoDTO> listadoDePedidosDelClienteID(int idCliente){
 
-        List<PedidoDTO> listPedidos =  pedidoDAOImpl.getAllByCliente(idCliente);
-
-        return listPedidos;
+    @Override
+    public List<Pedido> obtenerPedidosPorComercial(int idComercial) {
+        return pedidoMapper.listPedidoDTOAListPedido(comercialDAO.listaPedidosComercial(idComercial));
     }
 
+    @Override
+     public List<Comercial> obtenerListComercialesAsociadosConPedidos(int idCliente){
+        // Obtener la lista de pedidos del cliente
+        List<PedidoDTO> listPedidosCliente = pedidoDAOImpl.getAllByCliente(idCliente);
 
-     public List<Comercial> listComercialesAsociadosSeteado(int idCliente){
 
-        // ids de los Comerciales sin repeticiones
-        Set<Integer> setCom = listadoDePedidosDelClienteID(idCliente).stream()
+        // Obtener los IDs únicos de los comerciales asociados al cliente
+        Set<Integer> setComerciales  = listPedidosCliente.stream()
                 .map(PedidoDTO::getId_comercial)
                 .collect(Collectors.toSet());
 
-        // List comeciales asociados para setear
-        List<Comercial> lstCom = comercialDAO.getAll().stream()
-                .filter(comercial -> setCom.contains(comercial.getId()))
+        // Obtener lista de ComercialDTO del cliente específico
+        List<Comercial> lstComerciales = setComerciales.stream()
+                .map(idComercial -> comercialDAO.find(idComercial).orElse(null))
                 .collect(Collectors.toList());
 
-        //seteo del resultado a DTO
+        //seteo del resultado a DTO de Cliente
          ClienteDTO clienteDTO = clienteMapper.clienteAClienteDTO(clienteDAO.find(idCliente).get());
-         clienteDTO.setComercialesAsociados(lstCom);
+         clienteDTO.setComercialesAsociados(lstComerciales);
 
-        return clienteDTO.getComercialesAsociados(); //alternativa  lstCom
+
+
+        return lstComerciales; //alternativa  lstCom
     }
 
+
+
+    public int obtenerNumPedidosPorComercialYCliente(int idComercial, int idCliente) {
+        List<Pedido> lstPorComer = obtenerPedidosPorComercial(idComercial);
+
+        // Filtrar la lista de pedidos para obtener solo los relacionados con el cliente específico
+        List<Pedido> lstPorComerPorClie = lstPorComer.stream()
+                .filter(pedido -> pedido.getId_cliente() == idCliente)
+                .collect(Collectors.toList());
+
+        return lstPorComerPorClie.size();
+    }
 
 
 

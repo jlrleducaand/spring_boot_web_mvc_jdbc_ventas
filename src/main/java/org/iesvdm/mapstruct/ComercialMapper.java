@@ -21,6 +21,11 @@ public interface ComercialMapper {
 
     public List<PedidoDTO> listPedidoALisPedidoDTO(List<Pedido> listaPedido);
 
+    public List<ComercialDTO> listComercialAListComercialDTO(List<Comercial> listaComercial);
+
+    public List<Comercial> listComercialDTOAListComercial(List<ComercialDTO> listaComercialDTO);
+
+
     public PedidoDTO pedidoAPedidoDTO(Pedido pedido);
 
     public Pedido PedidoDTOAPedido(PedidoDTO pedidoDTO);

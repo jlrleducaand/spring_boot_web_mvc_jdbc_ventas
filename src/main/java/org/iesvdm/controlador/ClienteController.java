@@ -1,8 +1,10 @@
 package org.iesvdm.controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.iesvdm.dto.ClienteDTO;
+import org.iesvdm.dto.ComercialDTO;
 import org.iesvdm.dto.PedidoDTO;
 import org.iesvdm.modelo.Cliente;
 import org.iesvdm.modelo.Comercial;
@@ -51,18 +53,24 @@ public class ClienteController {
     @GetMapping("/clientes/{id}")
     public String detalle(Model model, @PathVariable Integer id) {
 
-        //Obtener el listado de Pedidos por Comercial y Cliente
-        List<PedidoDTO> lstPedComClie = comercialService.obtenerListaPedidoDeThisComercialIdCliente(id);
-        model.addAttribute("numPedido", lstPedComClie);
 
         // Obtener el detalle del cliente
         Cliente cliente =   clienteService.detalle(id);
         model.addAttribute("cliente", cliente);
 
 
-        // Obtener el Listado de Comerciales Asociados
-        List<Comercial> lstComerciales = clienteService.listComercialesAsociadosSeteado(id);
+        // Obtener el Listado de Comerciales Asociados Con Pedidos
+        List<Comercial> lstComerciales = clienteService.obtenerListComercialesAsociadosConPedidos(id);
         model.addAttribute("listaComercial", lstComerciales);
+
+
+        // Obtener el num de Pedidos por Comercial y Cliente
+        List<ComercialDTO> comercialesConPedidos = new ArrayList<>();
+        for (Comercial comercial : lstComerciales) {
+            int numPedidosComercialCliente = clienteService.obtenerNumPedidosPorComercialYCliente(comercial.getId(), id);
+            comercialesConPedidos.add(new ComercialDTO(comercial, numPedidosComercialCliente));
+        }
+        model.addAttribute("comercialesConPedidos", comercialesConPedidos);
 
         return "cliente-detalle";
 

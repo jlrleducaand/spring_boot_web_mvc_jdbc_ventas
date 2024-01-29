@@ -4,6 +4,7 @@ package org.iesvdm.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.iesvdm.modelo.Comercial;
 import org.iesvdm.modelo.Pedido;
 import org.springframework.stereotype.Repository;
 
@@ -28,5 +29,17 @@ public class ComercialDTO {
     //Campos extras para las funcionalidades
     private Double total;
     private Double media;
+    private int numPedidos;
+
+
+    // Constructor que acepta un objeto Comercial y el número de pedidos
+    public ComercialDTO(Comercial comercial, int numPedidos) {
+        this.id = comercial.getId();
+        this.nombre = comercial.getNombre();
+        this.apellido1 = comercial.getApellido1();
+        this.apellido2 = comercial.getApellido2();
+        this.comision = comercial.getComision();
+        this.numPedidos = numPedidos;
+    }
 
 }
