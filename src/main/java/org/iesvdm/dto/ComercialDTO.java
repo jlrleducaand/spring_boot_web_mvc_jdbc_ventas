@@ -41,7 +41,7 @@ public class ComercialDTO {
         this.nombre = comercial.getNombre();
         this.apellido1 = comercial.getApellido1();
         this.apellido2 = comercial.getApellido2();
-        this.comision = comercial.getComision();
+        this.comision = comercial.getComision().floatValue();
         this.numPedidos = numPedidos;
     }
 

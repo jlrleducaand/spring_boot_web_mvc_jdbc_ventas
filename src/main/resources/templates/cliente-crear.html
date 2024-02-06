@@ -40,11 +40,26 @@
         </div>
         <div class="mt-2">
             <div class=" d-flex justify-content-center gap-2">
-                <input type="text" class="col-2" th:field="*{nombre}"/>
-                <input type="text" class="col-2" th:field="*{apellido1}"/>
-                <input type="text" class="col-2" th:field="*{apellido2}"/>
-                <input type="text" class="col-2" th:field="*{ciudad}"/>
-                <input type="number" class="col-2" th:field="*{categoria}"/>
+                <input type="text" class="col-2" th:field="${nombre}"/>
+                <div class="col-3 text-danger" th:if="${#fields.hasErrors('nombre')}">
+                    <span style="float: left" th:each="error : ${#fields.errors('nombre')}" th:text="${error}"/>
+                </div>
+                <input type="text" class="col-2" th:field="${apellido1}"/>
+                <div class="col-3 text-danger" th:if="${#fields.hasErrors('apellido1')}">
+                    <span style="float: left" th:each="error : ${#fields.errors('apellido1')}" th:text="${error}"/>
+                </div>
+                <input type="text" class="col-2" th:field="${apellido2}"/>
+                <div class="col-3 text-danger" th:if="${#fields.hasErrors('email')}">
+                    <span style="float: left" th:each="error : ${#fields.errors('email')}" th:text="${error}"/>
+                </div>
+                <input type="text" class="col-2" th:field="${ciudad}"/>
+                <div class="col-3 text-danger" th:if="${#fields.hasErrors('ciudad')}">
+                    <span style="float: left" th:each="error : ${#fields.errors('ciudad')}" th:text="${error}"/>
+                </div>
+                <input type="number" class="col-2" th:field="${categoria}"/>
+                <div class="col-3 text-danger" th:if="${#fields.hasErrors('categoria')}">
+                    <span style="float: left" th:each="error : ${#fields.errors('categoria')}" th:text="${error}"/>
+                </div>
             </div>
         </div>
 

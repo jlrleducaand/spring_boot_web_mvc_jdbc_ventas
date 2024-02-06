@@ -54,7 +54,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 			ps.setString(idx++, comercial.getNombre());
 			ps.setString(idx++, comercial.getApellido1());
 			ps.setString(idx++, comercial.getApellido2());
-			ps.setFloat(idx++, comercial.getComision());
+			ps.setFloat(idx++, comercial.getComision().floatValue());
 			return ps;
 		},keyHolder);
 
@@ -72,7 +72,7 @@ public class ComercialDAOImpl implements ComercialDAO {
                 							  rs.getString("nombre"), 
                 							  rs.getString("apellido1"),
                 							  rs.getString("apellido2"), 
-                							  rs.getFloat("comision"))
+                							  rs.getBigDecimal("comision"))
         );
 		
 		log.info("Devueltos {} registros.", listComer.size());
@@ -117,7 +117,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 								rs.getString("nombre"),
 								rs.getString("apellido1"),
 								rs.getString("apellido2"),
-								rs.getFloat("comision"))
+								rs.getBigDecimal("comision"))
 						, id
 				);
 

@@ -30,9 +30,19 @@ public class ClienteDTO {
 
     private Double sumaPedidos;
     private int numPedidos;
+
     private int numPedidosUltimoTrimestre;
     private int numPedidosUltimoSemestre;
     private int numPedidosUltimoAño;
     private int numPedidosUltimoLustro;
+
+    public ClienteDTO(long id, String nombre, String apellido1, String apellido2, String ciudad, int categoria) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.ciudad = ciudad;
+        this.categoria = categoria;
+    }
 
 }

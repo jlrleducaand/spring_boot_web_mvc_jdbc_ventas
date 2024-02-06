@@ -125,7 +125,7 @@ public class ClienteService implements ClienteServiceI{
     @Override
     public List<ComercialDTO> obtenerEstadisticaYComerciales(int idCliente) {
 
-        return clienteDAOImpl.ComercialesConTotalPedidosDeCliente(idCliente);
+        return clienteDAOImpl.ComercialesConEstadisticasPedidosDeCliente(idCliente);
     }
 
 

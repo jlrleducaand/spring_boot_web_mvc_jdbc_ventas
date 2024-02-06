@@ -35,7 +35,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 		//Desde java15+ se tiene la triple quote """ para bloques de texto como cadenas. y no tendra en cuenta los saltos de linea
 		String sqlInsert = """
 							INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoria) 
-							VALUES  (     	?,         ?,         ?,       ?,         ?)
+							VALUES  (     	?,         ?,         ?,       ?,        ?)
 						   """;
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -121,19 +121,20 @@ public class ClienteDAOImpl implements ClienteDAO {
 	public void update(Cliente cliente) {
 		
 		int rows = jdbcTemplate.update("""
-										UPDATE cliente SET 
-														nombre = ?, 
-														apellido1 = ?, 
-														apellido2 = ?,
-														ciudad = ?,
-														categoria = ?  
-												WHERE id = ?
-										""", cliente.getNombre()
-										, cliente.getApellido1()
-										, cliente.getApellido2()
-										, cliente.getCiudad()
-										, cliente.getCategoria()
-										, cliente.getId());
+										UPDATE cliente SET 	
+										nombre = ?, 	
+										apellido1 = ?, 
+										apellido2 = ?, 
+										ciudad = ?,
+										categoria = ? 
+										WHERE id = ?
+										"""	,
+										cliente.getNombre(),
+										cliente.getApellido1(),
+										cliente.getApellido2(),
+										cliente.getCiudad(),
+										cliente.getCategoria(),
+										cliente.getId());
 		
 		log.info("Update de Cliente con {} registros actualizados.", rows);
     
@@ -153,7 +154,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 
 
-	public List<ComercialDTO> ComercialesConTotalPedidosDeCliente(int idCliente) {
+	public List<ComercialDTO> ComercialesConEstadisticasPedidosDeCliente(int idCliente) {
 		String sql = "SELECT " +
 				"c.id AS id, " +
 				"c.nombre AS nombre, " +
@@ -162,6 +163,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 				"c.comision AS comision, " +
 				"COUNT(p.id) AS num_pedidos, " +
 				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 90 THEN 1 ELSE 0 END) AS num_pedidos_trim, " +
+				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 180 THEN 1 ELSE 0 END) AS num_pedidos_sem, " +
 				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 365 THEN 1 ELSE 0 END) AS num_pedidos_anio, " +
 				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 1825 THEN 1 ELSE 0 END) AS num_pedidos_lustro " +
 				"FROM " +
