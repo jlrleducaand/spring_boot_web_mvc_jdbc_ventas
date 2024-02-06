@@ -55,8 +55,8 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner 
        clienteDAO.getAll().forEach(c -> log.info("Cliente: {}", c));
 
 
-        int id = 1;
-        Optional<Cliente> cliente = clienteDAO.find(id);
+      int id = 1;
+        /*  Optional<Cliente> cliente = clienteDAO.find(id);
 
         if (cliente.isPresent()) {
             log.info("Cliente {}: {}", id, cliente.get());
@@ -72,7 +72,8 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner 
             cliente.get().setNombre(nombreOld);
             clienteDAO.update(cliente.get());
 
-        }
+        }*/
+
         log.info("*******************************");
         log.info("*Prueba de arranque ComercialDAO*");
         log.info("*******************************");
@@ -121,6 +122,7 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner 
             pedido.get().setId(pedidoOld);
             pedidoDAO.update(pedido.get());
         }
+/*
 
         // Como es un cliente nuevo a persistir, id a 0
         Cliente clienteNew = new Cliente(0, "Jose M", "Martín", null, "Málaga", 100);
@@ -139,6 +141,7 @@ public class SpringBootWebMvcJdbcVentasApplication implements CommandLineRunner 
         log.info("************************************");
         log.info("*FIN: Prueba de arranque ClienteDAO*");
         log.info("************************************");
+*/
 
 
         // Como es un comercial nuevo a persistir, id a 0
