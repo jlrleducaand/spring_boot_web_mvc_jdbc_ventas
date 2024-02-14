@@ -31,6 +31,7 @@ public class ComercialDTO {
     private Double media;
     private int numPedidos;
     private int numPedidosTrim;
+    private int numPedidosSem;
     private int numPedidosAnio;
     private int numPedidosLustro;
 

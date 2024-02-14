@@ -162,6 +162,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 				"c.comision AS comision, " +
 				"COUNT(p.id) AS num_pedidos, " +
 				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 90 THEN 1 ELSE 0 END) AS num_pedidos_trim, " +
+				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 182 THEN 1 ELSE 0 END) AS num_pedidos_sem, " +
 				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 365 THEN 1 ELSE 0 END) AS num_pedidos_anio, " +
 				"SUM(CASE WHEN DATEDIFF(NOW(), p.fecha) <= 1825 THEN 1 ELSE 0 END) AS num_pedidos_lustro " +
 				"FROM " +

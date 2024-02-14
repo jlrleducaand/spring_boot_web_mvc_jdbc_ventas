@@ -92,10 +92,11 @@
     <div class="container">
         <div class="row bg-primary  text-center  py-3">
             <div class="col-2 text-white" th:text="#{msg.id_comercial}">Id-Comercial</div>
-            <div class="col-3 text-white" th:text="#{msg.cliente.total}">NºPedidos</div>
-            <div class="col-3 text-white" th:text="#{msg.cliente.trim}">Trimestre</div>
-            <div class="col-3 text-white" th:text="#{msg.cliente.anio}">Año</div>
-            <div class="col-1 text-white" th:text="#{msg.cliente.lustro}">Lustro</div>
+            <div class="col-2 text-white" th:text="#{msg.cliente.total}">NºPedidos</div>
+            <div class="col-2 text-white" th:text="#{msg.cliente.trim}">Trimestre</div>
+            <div class="col-2 text-white" th:text="#{msg.cliente.sem}">Semestre</div>
+            <div class="col-2 text-white" th:text="#{msg.cliente.anio}">Año</div>
+            <div class="col-2 text-white" th:text="#{msg.cliente.lustro}">Lustro</div>
 
 
         </div>
@@ -104,10 +105,11 @@
         </div>
         <div class="row text-center py-1" th:each="comercial: ${comercialEstadistica}">
             <div class="col-2" th:text="${comercial.id}">Comercial</div>
-            <div class="col-3" th:text="${comercial.numPedidos}">NºPedidos</div>
-            <div class="col-3" th:text="${comercial.numPedidosTrim}">NºTrimestre</div>
-            <div class="col-3" th:text="${comercial.numPedidosAnio}">NºAños</div>
-            <div class="col-1" th:text="${comercial.numPedidosLustro}">NºLustro</div>
+            <div class="col-2" th:text="${comercial.numPedidos}">NºPedidos</div>
+            <div class="col-2" th:text="${comercial.numPedidosTrim}">NºTrimestre</div>
+            <div class="col-2" th:text="${comercial.numPedidosSem}">NºSemestre</div>
+            <div class="col-2" th:text="${comercial.numPedidosAnio}">NºAños</div>
+            <div class="col-2" th:text="${comercial.numPedidosLustro}">NºLustro</div>
 
 
         </div>
