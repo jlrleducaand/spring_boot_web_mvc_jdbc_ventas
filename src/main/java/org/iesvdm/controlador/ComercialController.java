@@ -85,7 +85,7 @@ public class ComercialController {
         //recorro la lista de pedidos  que tengo Arriba
         for (PedidoDTO pedido : listaPedidos) {
             // Obtener el cliente del pedido
-            Cliente clie = comercialService.obtenerClientePorId(pedido.getId_cliente()).get();
+            Cliente clie = comercialService.obtenerClientePorId((int) pedido.getId_cliente()).get();
             //conversion tipos
             int idInt = Math.toIntExact(clie.getId());
             // Solo si aún no está en el mapa lo añado

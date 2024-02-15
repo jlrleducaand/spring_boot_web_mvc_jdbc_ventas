@@ -66,7 +66,7 @@ public class PedidoDAOImpl implements PedidoDAO{
     public List<Pedido> getAll() {
         List<Pedido> listPed = jdbcTemplate.query(
                 "SELECT * FROM pedido",
-                (rs, rowNum) -> new Pedido(rs.getInt("id"),
+                (rs, rowNum) -> new Pedido(rs.getLong("id"),
                         rs.getDouble("total"),
                         rs.getDate("fecha"),
                         rs.getInt("id_cliente"),
@@ -81,10 +81,10 @@ public class PedidoDAOImpl implements PedidoDAO{
     }
 
     @Override
-    public List<PedidoDTO> getAllByComercial(int idComercial) {
+    public List<PedidoDTO> getAllByComercial(long idComercial) {
         List<Pedido> listPed = jdbcTemplate.query(
                 "SELECT * FROM pedido WHERE id_comercial = ? "
-                    ,(rs, rowNum) -> new Pedido(rs.getInt("id"),
+                    ,(rs, rowNum) -> new Pedido(rs.getLong("id"),
                         rs.getDouble("total"),
                         rs.getDate("fecha"),
                         rs.getInt("id_cliente"),
@@ -93,7 +93,7 @@ public class PedidoDAOImpl implements PedidoDAO{
         );
         // Convertir la lista de entidades Pedido a una lista de PedidoDTO usando el mapeador
         List<PedidoDTO> listPedDTO = listPed.stream()
-                .map(pedidoMapper::pedidoAPedidolDTO)
+                .map(pedidoMapper::pedidoAPedidoDTO)
                 .collect(Collectors.toList());
 
 
@@ -103,10 +103,10 @@ public class PedidoDAOImpl implements PedidoDAO{
     }
 
     @Override
-    public List<PedidoDTO> getAllByCliente(int idCliente) {
+    public List<PedidoDTO> getAllByCliente(long idCliente) {
         List<Pedido> listPed = jdbcTemplate.query(
                 "SELECT * FROM pedido WHERE id_cliente = ? "
-                ,(rs, rowNum) -> new Pedido(rs.getInt("id"),
+                ,(rs, rowNum) -> new Pedido(rs.getLong("id"),
                         rs.getDouble("total"),
                         rs.getDate("fecha"),
                         rs.getInt("id_cliente"),
@@ -115,7 +115,7 @@ public class PedidoDAOImpl implements PedidoDAO{
         );
 
         List<PedidoDTO> listPedDTO = listPed.stream()
-                .map(pedidoMapper::pedidoAPedidolDTO)
+                .map(pedidoMapper::pedidoAPedidoDTO)
                 .collect(Collectors.toList());
 
         log.info("Devueltos {} registros.", listPed.size());
@@ -124,10 +124,10 @@ public class PedidoDAOImpl implements PedidoDAO{
     }
 
     @Override
-    public Optional<Pedido> find(int id) {
+    public Optional<Pedido> find(long id) {
         Pedido ped =  jdbcTemplate
                 .queryForObject("SELECT * FROM pedido WHERE id = ?"
-                        , (rs, rowNum) -> new Pedido(rs.getInt("id"),
+                        , (rs, rowNum) -> new Pedido(rs.getLong("id"),
                                 rs.getDouble("total"),
                                 rs.getDate("fecha"),
                                 rs.getInt("id_cliente"),

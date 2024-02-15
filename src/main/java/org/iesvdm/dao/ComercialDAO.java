@@ -12,9 +12,9 @@ public interface ComercialDAO {
 	
 	public List<Comercial> getAll();
 
-	public List<PedidoDTO> listaPedidosComercial(int id);
+	public List<PedidoDTO> listaPedidosComercial(long id);
 
-	public Optional<Comercial>  find(int id);
+	public Optional<Comercial>  find(long id);
 	
 	public void update(Comercial cliente);
 	

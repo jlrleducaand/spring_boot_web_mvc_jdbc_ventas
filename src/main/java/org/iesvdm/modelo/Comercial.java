@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Comercial {
 
-	private int id;
+	private long id;
 
 	@NotBlank(message="{msg.valid.blank}")
 	//@NotNull(message="{msg.valid.null}")

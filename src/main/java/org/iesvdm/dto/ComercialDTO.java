@@ -20,7 +20,7 @@ import java.util.Map;
 // del constructor
 public class ComercialDTO {
 
-    private int id;
+    private long id;
     private String nombre;
     private String apellido1;
     private String apellido2;
@@ -31,6 +31,7 @@ public class ComercialDTO {
     private Double media;
     private int numPedidos;
     private int numPedidosTrim;
+    private int numPedidosSem;
     private int numPedidosAnio;
     private int numPedidosLustro;
 

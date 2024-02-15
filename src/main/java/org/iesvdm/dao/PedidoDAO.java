@@ -10,11 +10,11 @@ public interface PedidoDAO {
 
     public List<Pedido> getAll();
 
-    public List<PedidoDTO> getAllByComercial(int id);
+    public List<PedidoDTO> getAllByComercial(long id);
 
-    public List<PedidoDTO> getAllByCliente(int id);
+    public List<PedidoDTO> getAllByCliente(long id);
 
-    public Optional<Pedido> find(int id);
+    public Optional<Pedido> find(long id);
 
     public void update(Pedido pedido);
 

@@ -22,38 +22,35 @@ import org.springframework.web.server.ResponseStatusException;
 @Service  //solo espero logica de negocios
 public class ClienteService implements ClienteServiceI{
 
-    private ClienteDAO clienteDAO;
-    private PedidoDAO pedidoDAOImpl;
-    private ComercialDAO comercialDAO;
-    private ClienteDTO clienteDTO;
-    private ClienteMapper clienteMapper;
-    private PedidoMapper pedidoMapper;
+    private  ClienteDAO clienteDAO;
+    private  PedidoDAO pedidoDAOImpl;
+    private  ComercialDAO comercialDAO;
+    private  ClienteMapper clienteMapper;
+    private  PedidoMapper pedidoMapper;
+    private  ClienteDAOImpl clienteDAOImpl;
     private ComercialMapper comercialMapper;
-    private ClienteDAOImpl clienteDAOImpl;
+    private ClienteDTO clienteDTO;
 
 
-    @Autowired
+
+    @Autowired //inyeccion automatica por constructor
     public ClienteService(ClienteDAO clienteDAO,
                           PedidoDAOImpl pedidoDAOImpl,
                           ComercialDAO comercialDAO,
-                          ClienteDTO clienteDTO,
                           ClienteMapper clienteMapper,
                           PedidoMapper pedidoMapper,
-                          ComercialMapper comercialMapper,
                           ClienteDAOImpl clienteDAOImpl)
     {
         this.clienteDAO = clienteDAO;
         this.pedidoDAOImpl = pedidoDAOImpl;
         this.comercialDAO = comercialDAO;
-        this.clienteDTO = clienteDTO;
         this.clienteMapper = clienteMapper;
         this.pedidoMapper = pedidoMapper;
-        this.comercialMapper = comercialMapper;
         this.clienteDAOImpl = clienteDAOImpl;
     }
 
     //Se utiliza inyección automática por constructor del framework Spring.
-    //Por tanto, se puede omitir la anotación Autowired  o NO
+    //Por tanto, se puede omitir la anotación Autowired o NO
     //@Autowired
     //public ClienteService(ClienteDAO clienteDAO) {
     //
@@ -62,7 +59,7 @@ public class ClienteService implements ClienteServiceI{
 
     public List<Cliente> listAll() {
 
-        return clienteDAO.getAll();
+        return clienteDAOImpl.getAll();
 
     }
 
@@ -104,7 +101,7 @@ public class ClienteService implements ClienteServiceI{
 
 
         // Obtener los IDs únicos de los comerciales asociados al cliente
-        Set<Integer> setComerciales  = listPedidosCliente.stream()
+        Set<Long> setComerciales  = listPedidosCliente.stream()
                 .map(PedidoDTO::getId_comercial)
                 .collect(Collectors.toSet());
 
@@ -135,7 +132,7 @@ public class ClienteService implements ClienteServiceI{
         // Filtrar la lista de pedidos para obtener solo los relacionados con el cliente específico
         List<Pedido> lstPorComerPorClie = lstPorComer.stream()
                 .filter(pedido -> pedido.getId_cliente() == idCliente)
-                .collect(Collectors.toList());
+                .toList();
 
         return lstPorComerPorClie.size();
     }

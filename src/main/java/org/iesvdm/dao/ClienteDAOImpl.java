@@ -144,7 +144,7 @@ public class ClienteDAOImpl implements ClienteDAO {
 	 * Borra Cliente con ID proporcionado.
 	 */
 	@Override
-	public void delete(long id) {
+	public void delete(int id) {
 		
 		int rows = jdbcTemplate.update("DELETE FROM cliente WHERE id = ?", id);
 		

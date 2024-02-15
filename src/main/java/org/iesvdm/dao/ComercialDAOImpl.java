@@ -81,7 +81,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 	}
 
 	@Override
-	public List<PedidoDTO> listaPedidosComercial(int id) {
+	public List<PedidoDTO> listaPedidosComercial(long id) {
 		List<Pedido> listPed = jdbcTemplate.query(
 				"SELECT * FROM pedido WHERE pedido.id_comercial = ? "
 				,(rs, rowNum) -> new Pedido(rs.getInt("id"),
@@ -109,7 +109,7 @@ public class ComercialDAOImpl implements ComercialDAO {
 	 * Devuelve Optional de Comercial con el ID dado.
 	 */
 	@Override
-	public Optional<Comercial> find(int id) {
+	public Optional<Comercial> find(long id) {
 		// TODO Auto-generated method stub
 		Comercial comer =  jdbcTemplate
 				.queryForObject("SELECT * FROM comercial WHERE id = ?"

@@ -22,12 +22,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ComercialService implements ComercialServiceI {
 
-    private final ComercialDAO comercialDAO;
-    private final PedidoDAOImpl pedidoDAOImpl;
-    private final ClienteDAO clienteDAO;
-    private final ComercialMapper comercialMapper;
-    private final ComercialDTO comercialDTO;
-    private final ClienteMapper clienteMapper;
+    private  ComercialDAO comercialDAO;
+    private  PedidoDAOImpl pedidoDAOImpl;
+    private  ClienteDAO clienteDAO;
+    private  ComercialMapper comercialMapper;
+    private  ComercialDTO comercialDTO;
+    private  ClienteMapper clienteMapper;
 
 
 
@@ -125,14 +125,14 @@ public class ComercialService implements ComercialServiceI {
         List<PedidoDTO> listaPedidos = obtenerPedidosPorComercial(idComercial);
 
         // Obtener la suma de pedidos por cliente
-        Map<Integer, Double> sumaPedidosPorCliente = listaPedidos.stream()
+        Map<Long, Double> sumaPedidosPorCliente = listaPedidos.stream()
                 .collect(Collectors.groupingBy(PedidoDTO::getId_cliente,  // los id van a la key (cliente)
                         Collectors.summingDouble(PedidoDTO::getTotal)));  // las sumas al value
 
         // Obtener la lista de clientes correspondientes a esos IDs
         List<ClienteDTO> listaClientesConPedidos = sumaPedidosPorCliente.keySet().stream()
                 .map(idCliente -> {
-                    ClienteDTO clienteDTO = clienteMapper.clienteAClienteDTO(obtenerClientePorId(idCliente).orElse(null));
+                    ClienteDTO clienteDTO = clienteMapper.clienteAClienteDTO(obtenerClientePorId(Math.toIntExact(idCliente)).orElse(null));
                     clienteDTO.setSumaPedidos(Double.parseDouble(df.format(sumaPedidosPorCliente.get(idCliente)/100).replaceAll("[^\\d.]", ""))); // setear el atributo de Cliente
                     return clienteDTO;
                 })

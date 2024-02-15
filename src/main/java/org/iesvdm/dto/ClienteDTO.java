@@ -36,13 +36,8 @@ public class ClienteDTO {
     private int numPedidosUltimoAño;
     private int numPedidosUltimoLustro;
 
-    public ClienteDTO(long id, String nombre, String apellido1, String apellido2, String ciudad, int categoria) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
-        this.ciudad = ciudad;
-        this.categoria = categoria;
+    public ClienteDTO(int id, String nombre, String apellido1, String apellido2, String ciudad, int categoria) {
+
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public interface PedidoMapper {
 
 
-    public PedidoDTO pedidoAPedidolDTO(Pedido pedido);
+    public PedidoDTO pedidoAPedidoDTO(Pedido pedido);
 
     public Pedido pedidoDTOAPedido(PedidoDTO pedidoDTO);
 

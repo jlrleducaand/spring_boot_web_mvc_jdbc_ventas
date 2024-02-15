@@ -67,7 +67,7 @@ public class ClienteController {
         // Obtener el num de Pedidos por Comercial y Cliente
         List<ComercialDTO> comercialesConPedidos = new ArrayList<>();
         for (Comercial comercial : lstComerciales) {
-            int numPedidosComercialCliente = clienteService.obtenerNumPedidosPorComercialYCliente(comercial.getId(), id);
+            int numPedidosComercialCliente = clienteService.obtenerNumPedidosPorComercialYCliente((int) comercial.getId(), id);
             comercialesConPedidos.add(new ComercialDTO(comercial, numPedidosComercialCliente));
         }
         model.addAttribute("comercialesConPedidos", comercialesConPedidos);
